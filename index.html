@@ -19,6 +19,20 @@
     <meta name="twitter:description" content="Portal de herramientas online para desarrolladores. Rápido, minimalista y sin registro." />
     
     <title>Online DevToolsKit - Herramientas Online para Desarrolladores</title>
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G8CSCGH4HS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-G8CSCGH4HS', {
+        page_title: 'DevToolsKit - Herramientas Online para Desarrolladores',
+        page_location: window.location.href,
+        custom_map: {'custom_parameter_1': 'tool_used'}
+      });
+    </script>
+
   </head>
   <body class="min-h-screen bg-gray-50 flex flex-col">
     <div id="app"></div>

@@ -4,6 +4,7 @@ import { Footer } from './components/layout/Footer';
 import { ToolCard } from './components/common/ToolCard';
 import { JSONValidator } from './tools/json-validator/JSONValidator';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
+import { initializeAnalytics, trackPageView } from './utils/analytics';
 
 class App {
   private app: HTMLElement;
@@ -14,6 +15,11 @@ class App {
     this.currentRoute = window.location.pathname;
     this.init();
     this.handleRouting();
+    
+    // Initialize Google Analytics
+    setTimeout(() => {
+      initializeAnalytics();
+    }, 1000);
   }
 
   private init(): void {
@@ -145,6 +151,11 @@ class App {
     window.history.pushState({}, '', path);
     this.currentRoute = path;
     this.renderCurrentPage();
+    
+    // Track page view for navigation
+    setTimeout(() => {
+      trackPageView(path, document.title);
+    }, 100);
   }
 
   private handleRouting(): void {
