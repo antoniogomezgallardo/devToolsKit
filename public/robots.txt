@@ -1,10 +1,29 @@
+# DevToolsKit - robots.txt
+# Permitir acceso a todos los crawlers
+
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemap location
 Sitemap: https://onlinedevtoolskit.com/sitemap.xml
 
-# Disallow admin or private paths
-Disallow: /admin/
-Disallow: /private/
-Disallow: /.git/
+# Crawl-delay para ser amigables con los servers
+Crawl-delay: 1
+
+# Bloquear archivos que no deben indexarse
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*.map$
+
+# Permitir herramientas específicas
+Allow: /tools/json-validator
+Allow: /tools/jwt-decoder
+Allow: /tools/base64-encoder
+Allow: /tools/password-generator
+Allow: /tools/color-palette
+
+# Información adicional
+# Sitio web: https://onlinedevtoolskit.com
+# Contacto: https://github.com/antoniogomezgallardo/devToolsKit
