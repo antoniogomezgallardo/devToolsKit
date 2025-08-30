@@ -161,6 +161,47 @@ release: bump version to v0.4.0
 - `src/utils/performance.ts` - Core Web Vitals monitoring
 - `src/utils/sitemap.ts` - Sitemap generation utilities
 
+## 📊 Google Analytics - Nueva Herramienta Checklist
+
+### ⚠️ IMPORTANTE: Cada nueva herramienta requiere actualizar GA4
+
+**Para cada nueva herramienta, actualizar `src/utils/analytics.ts`:**
+
+1. **Añadir en `ToolNames` (línea ~41-47)**:
+   ```typescript
+   NUEVA_HERRAMIENTA: 'nueva_herramienta'
+   ```
+
+2. **Añadir eventos específicos en `AnalyticsEvents` si necesarios**:
+   ```typescript
+   NUEVA_TOOL_SPECIFIC_EVENT: 'nueva_tool_specific_event',
+   NUEVA_TOOL_SUCCESS: 'nueva_tool_success',
+   NUEVA_TOOL_ERROR: 'nueva_tool_error'
+   ```
+
+3. **Crear función de tracking específica como `trackJSONValidator`**:
+   ```typescript
+   export const trackNuevaHerramienta = {
+     action: (params: any) => {
+       trackEvent(AnalyticsEvents.NUEVA_TOOL_SPECIFIC_EVENT, {
+         tool_name: ToolNames.NUEVA_HERRAMIENTA,
+         ...params
+       });
+     }
+   }
+   ```
+
+4. **Implementar tracking en la herramienta**:
+   ```typescript
+   import { trackNuevaHerramienta, trackToolUsage } from '@/utils/analytics';
+   
+   // Al usar la herramienta
+   trackToolUsage('nueva_herramienta', 'start');
+   trackNuevaHerramienta.action({ /* params */ });
+   ```
+
+**🔄 El sistema base (`trackToolUsage`, `trackPageView`) ya funciona para cualquier herramienta sin cambios.**
+
 ---
 
 **🎯 CRITICAL: This project follows GitFlow religiously. Phase 2 (SEO Optimization) is COMPLETE. Ready for Phase 3 (Tool Expansion). Version 0.3.0 deployed to production.**
