@@ -25,7 +25,7 @@ Crear un sitio web con 15-20 utilidades online para desarrolladores que funcione
 - **Performance**: Core Web Vitals monitoring (LCP, FID, CLS, FCP, TTFB)
 - **Monetización**: Google AdSense (listo para solicitar)
 - **PWA**: Manifest.json configurado, service worker (futuro)
-- **Version**: 0.2.3
+- **Version**: 0.3.0
 
 ## 🛠️ Herramientas Implementadas
 
