@@ -22,7 +22,7 @@ Crear un sitio web con 15-20 utilidades online para desarrolladores que funcione
 - **Analytics**: Google Analytics 4 (pendiente configuración)
 - **Monetización**: Google AdSense (pendiente configuración)
 - **PWA**: Service Worker para funcionalidad offline (futuro)
-- **Version**: 0.1.1
+- **Version**: 0.2.0
 
 ## 🛠️ Herramientas Implementadas
 
