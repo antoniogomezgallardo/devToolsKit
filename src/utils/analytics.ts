@@ -22,6 +22,11 @@ export const AnalyticsEvents = {
   JSON_VALIDATION_SUCCESS: 'json_validation_success',
   JSON_VALIDATION_ERROR: 'json_validation_error',
   
+  // JWT Decoder Specific
+  JWT_DECODED: 'jwt_decoded',
+  JWT_DECODE_SUCCESS: 'jwt_decode_success',
+  JWT_DECODE_ERROR: 'jwt_decode_error',
+  
   // User Interactions
   COPY_RESULT: 'copy_result',
   CLEAR_INPUT: 'clear_input',
@@ -138,6 +143,39 @@ export const trackPageView = (pagePath: string, pageTitle: string): void => {
     trackEvent(AnalyticsEvents.PAGE_VIEW, {
       page_path: pagePath,
       page_title: pageTitle
+    });
+  }
+};
+
+/**
+ * Track JWT Decoder specific events
+ */
+export const trackJWTDecoder = {
+  decode: (tokenLength: number, hasSignature: boolean) => {
+    trackEvent(AnalyticsEvents.JWT_DECODED, {
+      tool_name: ToolNames.JWT_DECODER,
+      token_length: tokenLength,
+      has_signature: hasSignature,
+      action: 'decode'
+    });
+  },
+  
+  success: (tokenLength: number, algorithm: string, isExpired: boolean) => {
+    trackEvent(AnalyticsEvents.JWT_DECODE_SUCCESS, {
+      tool_name: ToolNames.JWT_DECODER,
+      token_length: tokenLength,
+      algorithm: algorithm,
+      is_expired: isExpired,
+      action: 'success'
+    });
+  },
+  
+  error: (tokenLength: number, errorType: string) => {
+    trackEvent(AnalyticsEvents.JWT_DECODE_ERROR, {
+      tool_name: ToolNames.JWT_DECODER,
+      token_length: tokenLength,
+      error_type: errorType,
+      action: 'error'
     });
   }
 };
