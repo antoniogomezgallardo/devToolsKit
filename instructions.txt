@@ -1,0 +1,12 @@
+Vamos a desarrollar un portal de utilidades online para desarrolladores, testers y DevOps, llamado devToolsKit con enfoque en herramientas prácticas, rápidas, en español y sin necesidad de registro. Quiero que me ayudes durante todo el proceso, desde la configuración inicial hasta la puesta en producción y mantenimiento. Aquí está toda la información necesaria:
+
+🎯 Objetivo
+
+Crear un sitio web minimalista con 15–20 utilidades online para desarrolladores (ej. conversor JSON ↔ CSV ↔ YAML ↔ XML, simulador de códigos HTTP, validador JSON, decodificador JWT, cURL builder…).
+
+Todo debe ejecutarse localmente en el navegador (client-side), excepto alguna ruta serverless para simular respuestas HTTP.
+
+El portal debe ser rápido, accesible y SEO-friendly, listo para monetizar con Google AdSense y afiliados.
+
+Es importante que sepas que el principal objeivo de este proyecto es generar un flujo de dinero constante durante muchos años, por tanto es importante estar al día de las últimas tecnologias que necesitan los devs como de las que llevan uilizando desde siempre.
+Así que propon todo lo necesario para tener buena visibilidad web, que se pueda moneizar y que sea minimalista y bonita para los usuarios y que les haga volver.
