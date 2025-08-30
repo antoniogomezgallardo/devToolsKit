@@ -28,7 +28,11 @@ export const AnalyticsEvents = {
   
   // Navigation
   PAGE_VIEW: 'page_view',
-  TOOL_PAGE_VIEW: 'tool_page_view'
+  TOOL_PAGE_VIEW: 'tool_page_view',
+  
+  // Performance
+  WEB_VITALS: 'web_vitals',
+  PERFORMANCE_REPORT: 'performance_report'
 } as const;
 
 /**

@@ -8,6 +8,7 @@ import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { initializeStructuredData } from './utils/structuredData';
 import { updateMetaTags, addAppIcons } from './utils/metaTags';
 import { initializeSitemap } from './utils/sitemap';
+import { initializePerformanceMonitoring } from './utils/performance';
 
 class App {
   private app: HTMLElement;
@@ -26,6 +27,9 @@ class App {
     
     // Initialize sitemap utilities
     initializeSitemap();
+    
+    // Initialize performance monitoring
+    initializePerformanceMonitoring();
   }
 
   private init(): void {
