@@ -7,6 +7,7 @@ import { TOOLS, SITE_CONFIG } from './utils/constants';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { initializeStructuredData } from './utils/structuredData';
 import { updateMetaTags, addAppIcons } from './utils/metaTags';
+import { initializeSitemap } from './utils/sitemap';
 
 class App {
   private app: HTMLElement;
@@ -22,6 +23,9 @@ class App {
     setTimeout(() => {
       initializeAnalytics();
     }, 1000);
+    
+    // Initialize sitemap utilities
+    initializeSitemap();
   }
 
   private init(): void {
