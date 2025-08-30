@@ -11,8 +11,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "vercel-build": "npm run build",
+    "build": "node build-script.cjs",
+    "vercel-build": "node build-script.cjs",
     "preview": "vite preview",
     "type-check": "tsc --noEmit"
   },
