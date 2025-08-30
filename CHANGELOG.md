@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3] - 2025-08-30
+
+### Added
+- 🔐 **Vercel Domain Verification**: Added .well-known/vercel file for domain ownership verification
+
+### Fixed
+- 🌐 **DNS Configuration**: Updated DNS records to point to Vercel (76.76.19.61)
+- 🔒 **SSL Certificate**: Resolved PR_END_OF_FILE_ERROR by configuring proper domain verification
+- ⚙️ **Vercel Config**: Simplified configuration to minimal setup for SSL compatibility
+
+### Technical
+- Configured DNS A record: @ → 76.76.19.61
+- Configured DNS CNAME: www → cname.vercel-dns.com  
+- Added domain verification file for Vercel SSL certificate generation
+
+## [0.2.2] - 2025-08-30
+
+### Fixed
+- 🔒 **Hotfix**: Ultra-minimal Vercel configuration to resolve SSL connection issues
+
+## [0.2.1] - 2025-08-30
+
+### Fixed
+- 🔒 **Hotfix**: Simplified security headers to resolve SSL conflicts
+
 ## [0.2.0] - 2025-08-30
 
 ### Added
