@@ -1,9 +1,9 @@
 {
+  "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "framework": "vite",
+  "devCommand": "npm run dev",
   "rewrites": [
     {
       "source": "/tools/(.*)",
@@ -29,6 +29,10 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
         }
       ]
     }
