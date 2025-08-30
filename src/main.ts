@@ -3,6 +3,7 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { ToolCard } from './components/common/ToolCard';
 import { JSONValidator } from './tools/json-validator/JSONValidator';
+import { JWTDecoder } from './tools/jwt-decoder/JWTDecoder';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { initializeStructuredData } from './utils/structuredData';
@@ -59,6 +60,9 @@ class App {
         break;
       case '/tools/json-validator':
         this.renderJSONValidator(mainContent);
+        break;
+      case '/tools/jwt-decoder':
+        this.renderJWTDecoder(mainContent);
         break;
       default:
         this.renderHomePage(mainContent);
@@ -151,6 +155,11 @@ class App {
   private renderJSONValidator(container: HTMLElement): void {
     container.innerHTML = '';
     new JSONValidator(container);
+  }
+
+  private renderJWTDecoder(container: HTMLElement): void {
+    container.innerHTML = '';
+    new JWTDecoder(container);
   }
 
   private navigate(path: string): void {
