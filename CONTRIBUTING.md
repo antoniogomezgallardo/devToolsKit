@@ -22,15 +22,14 @@ git checkout -b feature/nueva-herramienta
 
 ### 3. Desarrollo
 ```bash
-npm run dev  # Servidor de desarrollo
+npm run dev  # Servidor de desarrollo con Parcel
 ```
 
-### 4. Testing
+### 4. Testing y Verificación
 ```bash
-npm run test        # Tests unitarios
-npm run test:e2e    # Tests end-to-end
-npm run lint        # Linting
 npm run type-check  # Verificación TypeScript
+npm run build       # Verificar que el build funciona
+# Nota: Tests unitarios y linting pendientes de implementar
 ```
 
 ## 📁 Estructura de Archivos
@@ -38,20 +37,22 @@ npm run type-check  # Verificación TypeScript
 ### Añadir Nueva Herramienta
 ```
 src/tools/mi-herramienta/
-├── index.ts          # Exportaciones principales
 ├── MiHerramienta.ts  # Componente principal
-├── utils.ts          # Lógica de la herramienta
-├── types.ts          # Tipos TypeScript
-└── tests/
-    └── MiHerramienta.test.ts
+├── utils.ts          # Lógica de la herramienta (opcional)
+└── types.ts          # Tipos TypeScript (opcional)
+
+# Ejemplo actual:
+src/tools/json-validator/
+├── JSONValidator.ts  # Componente principal
+└── utils.ts          # Funciones de validación
 ```
 
-### Componentes Reutilizables
+### Componentes Reutilizables (Estructura Actual)
 ```
 src/components/
-├── ui/              # Componentes base (Button, Input, etc.)
-├── layout/          # Layout components
-└── common/          # Componentes compartidos
+├── ui/              # Componentes base (Button, Input, TextArea)
+├── layout/          # Layout components (Header, Footer)
+└── common/          # Componentes compartidos (ToolCard)
 ```
 
 ## 🛠️ Estándares de Código
@@ -130,11 +131,10 @@ my-component.tsx
 
 ### 1. Antes de enviar
 ```bash
-# Ejecutar todos los checks
-npm run lint:fix      # Fix automático de linting
-npm run type-check    # Verificar tipos
-npm run test          # Ejecutar tests
-npm run build         # Verificar build
+# Ejecutar todos los checks disponibles
+npm run type-check    # Verificar tipos TypeScript
+npm run build         # Verificar que el build funciona
+# Nota: Linting y tests pendientes de configurar
 ```
 
 ### 2. Commit Messages
