@@ -6,6 +6,7 @@ import { JSONValidator } from './tools/json-validator/JSONValidator';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { initializeStructuredData } from './utils/structuredData';
+import { updateMetaTags, addAppIcons } from './utils/metaTags';
 
 class App {
   private app: HTMLElement;
@@ -35,7 +36,9 @@ class App {
     
     this.renderCurrentPage();
     
-    // Initialize structured data for SEO
+    // Initialize SEO optimizations
+    addAppIcons();
+    updateMetaTags(this.currentRoute);
     initializeStructuredData();
   }
 
@@ -140,15 +143,6 @@ class App {
   private renderJSONValidator(container: HTMLElement): void {
     container.innerHTML = '';
     new JSONValidator(container);
-    
-    // Update page title
-    document.title = 'Validador JSON - DevToolsKit';
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
-    if (metaDescription) {
-      metaDescription.content = 'Validador JSON online - Valida, formatea y analiza código JSON con detección de errores. Gratis, rápido y sin registro.';
-    }
   }
 
   private navigate(path: string): void {
@@ -156,8 +150,9 @@ class App {
     this.currentRoute = path;
     this.renderCurrentPage();
     
-    // Update structured data for new page
+    // Update SEO for new page
     setTimeout(() => {
+      updateMetaTags(path);
       initializeStructuredData();
     }, 50);
     
@@ -172,8 +167,9 @@ class App {
       this.currentRoute = window.location.pathname;
       this.renderCurrentPage();
       
-      // Update structured data on browser navigation
+      // Update SEO on browser navigation
       setTimeout(() => {
+        updateMetaTags(this.currentRoute);
         initializeStructuredData();
       }, 50);
     });
