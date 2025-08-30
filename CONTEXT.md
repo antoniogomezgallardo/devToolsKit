@@ -153,6 +153,22 @@ Google Analytics 4 + Google AdSense
 - **Production**: Manual desde `main`
 - **Rollback**: Disponible en <5min
 
+### GitFlow Workflow ⚠️ **OBLIGATORIO**
+```
+main ────────●────────●  (Solo releases estables)
+            /        /
+develop ────●────●────●  (Rama principal de trabajo)
+           /    /
+feature/  ●────●        (Todas las nuevas features)
+```
+
+**Reglas estrictas**:
+- ✅ **SIEMPRE** trabajar en `develop`
+- ✅ **SIEMPRE** crear `feature/*` para nuevas herramientas
+- ✅ **NUNCA** commitear directamente a `main`
+- ✅ **SIEMPRE** usar `release/*` para crear versiones
+- ✅ Solo `hotfix/*` puede romper esta regla en emergencias
+
 ## 📝 Próximos Pasos
 
 ### Inmediatos - ✅ **COMPLETADOS**
