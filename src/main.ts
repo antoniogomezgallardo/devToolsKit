@@ -5,6 +5,7 @@ import { ToolCard } from './components/common/ToolCard';
 import { JSONValidator } from './tools/json-validator/JSONValidator';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
+import { initializeStructuredData } from './utils/structuredData';
 
 class App {
   private app: HTMLElement;
@@ -33,6 +34,9 @@ class App {
     this.app.appendChild(Footer());
     
     this.renderCurrentPage();
+    
+    // Initialize structured data for SEO
+    initializeStructuredData();
   }
 
   private renderCurrentPage(): void {
@@ -152,6 +156,11 @@ class App {
     this.currentRoute = path;
     this.renderCurrentPage();
     
+    // Update structured data for new page
+    setTimeout(() => {
+      initializeStructuredData();
+    }, 50);
+    
     // Track page view for navigation
     setTimeout(() => {
       trackPageView(path, document.title);
@@ -162,6 +171,11 @@ class App {
     window.addEventListener('popstate', () => {
       this.currentRoute = window.location.pathname;
       this.renderCurrentPage();
+      
+      // Update structured data on browser navigation
+      setTimeout(() => {
+        initializeStructuredData();
+      }, 50);
     });
 
     // Handle navigation clicks
