@@ -1,0 +1,70 @@
+Name,Description,Status,Priority,Phase,Assignee,Due Date,Tags,Time Estimate
+Setup proyecto,Configurar Parcel + TypeScript + Tailwind CSS,Complete,High,Fase 1 - MVP,,2025-08-30,setup;infrastructure,8h
+Documentación inicial,Crear README CONTEXT CONTRIBUTING ROADMAP,Complete,High,Fase 1 - MVP,,2025-08-30,documentation,4h
+Git repository,Configurar repositorio y GitFlow,Complete,High,Fase 1 - MVP,,2025-08-30,git;workflow,2h
+Layout básico,Implementar Header y Footer,Complete,High,Fase 1 - MVP,,2025-08-30,frontend;layout,6h
+Responsive design,Mobile-first approach implementado,Complete,High,Fase 1 - MVP,,2025-08-30,frontend;responsive,4h
+JSON Validator,Herramienta de validación JSON funcionando,Complete,High,Fase 1 - MVP,,2025-08-30,tools;json,8h
+Deploy inicial,Vercel setup y configuración,Complete,High,Fase 1 - MVP,,2025-08-30,deploy;vercel,4h
+Dominio configurado,onlinedevtoolskit.com funcionando,Complete,High,Fase 1 - MVP,,2025-08-30,domain;ssl,2h
+SSL & CDN,Configuración automática con Vercel,Complete,High,Fase 1 - MVP,,2025-08-30,security;performance,1h
+SEO básico,Meta tags sitemap robots.txt,Complete,High,Fase 1 - MVP,,2025-08-30,seo;optimization,6h
+Performance optimization,Parcel optimizado para Vercel,Complete,High,Fase 1 - MVP,,2025-08-30,performance;build,4h
+GitFlow implementation,Documentación completa de workflow,Complete,High,Setup,,2025-08-30,workflow;documentation,6h
+Complete project documentation,EXPLICACION_COMPLETA.md para stakeholders,Complete,Medium,Documentation,,2025-08-30,documentation;business,8h
+JWT Decoder,Herramienta para decodificar JWT tokens,To Do,High,Fase 1 - MVP,,,tools;jwt,8h
+Base64 Encoder/Decoder,Codificación y decodificación Base64,To Do,High,Fase 1 - MVP,,,tools;base64,6h
+Password Generator,Generador de contraseñas seguras,To Do,High,Fase 1 - MVP,,,tools;password,8h
+Color Palette Generator,Generador de paletas de colores,To Do,High,Fase 1 - MVP,,,tools;colors,10h
+Testing setup,Configurar Jest y Testing Library,To Do,Medium,Fase 1 - MVP,,,testing;setup,8h
+Google Analytics 4,Setup completo + eventos,To Do,High,Fase 2 - Optimización,,,analytics;tracking,6h
+Google Search Console,Sitemap submission y configuración,To Do,High,Fase 2 - Optimización,,,seo;google,2h
+Schema.org markup,Structured data implementation,To Do,High,Fase 2 - Optimización,,,seo;markup,8h
+OpenGraph & Twitter Cards,Social sharing optimization,To Do,Medium,Fase 2 - Optimización,,,seo;social,4h
+Performance audit,Lighthouse optimization >95,To Do,High,Fase 2 - Optimización,,,performance;audit,6h
+Accessibility,WCAG 2.1 AA compliance,To Do,Medium,Fase 2 - Optimización,,,accessibility;compliance,10h
+Google AdSense,Application y approval,To Do,High,Fase 2 - Optimización,,,monetization;ads,4h
+Ad placement,Strategic positioning,To Do,High,Fase 2 - Optimización,,,monetization;placement,4h
+A/B testing setup,Para optimizar conversión,To Do,Medium,Fase 2 - Optimización,,,testing;conversion,8h
+Affiliate prep,Links a herramientas dev,To Do,Medium,Fase 2 - Optimización,,,monetization;affiliate,6h
+Content creation,Blog posts para SEO,To Do,Medium,Fase 2 - Optimización,,,content;seo,12h
+Social media,Twitter LinkedIn profiles,To Do,Low,Fase 2 - Optimización,,,marketing;social,4h
+JSON ↔ CSV ↔ YAML ↔ XML,Convertidores universales,To Do,High,Fase 3 - Expansión,,,tools;converters,16h
+Hash Generator,MD5 SHA1 SHA256 etc,To Do,High,Fase 3 - Expansión,,,tools;hash,8h
+QR Code Generator,Con customización,To Do,High,Fase 3 - Expansión,,,tools;qr,10h
+RegEx Tester,Con explicaciones,To Do,High,Fase 3 - Expansión,,,tools;regex,12h
+Timestamp Converter,Unix ISO etc,To Do,High,Fase 3 - Expansión,,,tools;timestamp,8h
+Lorem Ipsum Generator,Personalizable,To Do,Medium,Fase 3 - Expansión,,,tools;lorem,6h
+PWA Implementation,Service Worker offline,To Do,High,Fase 3 - Expansión,,,pwa;offline,16h
+Dark Mode,Toggle theme,To Do,High,Fase 3 - Expansión,,,ui;theme,8h
+Favorites System,Marcar herramientas frecuentes,To Do,Medium,Fase 3 - Expansión,,,ux;favorites,10h
+Recent Tools,Historial de uso,To Do,Medium,Fase 3 - Expansión,,,ux;history,8h
+Search Function,Buscar herramientas,To Do,High,Fase 3 - Expansión,,,ux;search,12h
+Keyboard shortcuts,Power user features,To Do,Low,Fase 3 - Expansión,,,ux;keyboard,8h
+Advanced Analytics,Heat maps user flows,To Do,High,Fase 4 - Escalamiento,,,analytics;advanced,10h
+Conversion Optimization,A/B test ad positions,To Do,High,Fase 4 - Escalamiento,,,optimization;conversion,12h
+Email Collection,Newsletter opt-in,To Do,Medium,Fase 4 - Escalamiento,,,marketing;email,6h
+Premium Features,Freemium model testing,To Do,High,Fase 4 - Escalamiento,,,monetization;premium,20h
+API Access,Para desarrolladores,To Do,High,Fase 4 - Escalamiento,,,api;integration,16h
+White-label,Licensing options,To Do,Medium,Fase 4 - Escalamiento,,,business;licensing,12h
+Blog Platform,Tutoriales y guías,To Do,Medium,Fase 4 - Escalamiento,,,content;blog,20h
+Community Features,Comments ratings,To Do,Low,Fase 4 - Escalamiento,,,community;engagement,16h
+User Contributions,Sugerir herramientas,To Do,Medium,Fase 4 - Escalamiento,,,community;contributions,12h
+Multi-language,English version,To Do,High,Fase 4 - Escalamiento,,,i18n;localization,24h
+Mobile App,PWA to native,To Do,Medium,Fase 4 - Escalamiento,,,mobile;app,40h
+Integrations,VS Code extension etc,To Do,Low,Fase 4 - Escalamiento,,,integrations;extensions,20h
+AI-Powered Tools,Code generation optimization,To Do,Low,Fase 5 - Futuro,,,ai;tools,40h
+Collaboration Features,Share tools workspaces,To Do,Low,Fase 5 - Futuro,,,collaboration;sharing,24h
+Enterprise Features,Team accounts,To Do,Medium,Fase 5 - Futuro,,,enterprise;teams,32h
+Custom Domains,White-label hosting,To Do,Low,Fase 5 - Futuro,,,hosting;custom,16h
+Marketplace,Third-party tools,To Do,Low,Fase 5 - Futuro,,,marketplace;ecosystem,40h
+Certification Programs,Courses and badges,To Do,Low,Fase 5 - Futuro,,,education;certification,60h
+URL Encoder/Decoder,Básico necesario,To Do,Medium,Fase 3 - Expansión,,,tools;url,6h
+YAML ↔ JSON Converter,DevOps audience,To Do,Medium,Fase 3 - Expansión,,,tools;yaml,8h
+Markdown to HTML,Content creators,To Do,Medium,Fase 3 - Expansión,,,tools;markdown,10h
+CSS Beautifier/Minifier,Frontend devs,To Do,Medium,Fase 3 - Expansión,,,tools;css,12h
+HTTP Status Code Simulator,Muy específico,To Do,Low,Fase 4 - Escalamiento,,,tools;http,8h
+cURL Builder,Advanced users,To Do,Low,Fase 4 - Escalamiento,,,tools;curl,12h
+SQL Formatter,Niche audience,To Do,Low,Fase 4 - Escalamiento,,,tools;sql,10h
+XML Validator,Menos demanda,To Do,Low,Fase 4 - Escalamiento,,,tools;xml,8h
+ASCII Art Generator,Fun but low value,To Do,Low,Fase 5 - Futuro,,,tools;ascii,6h
