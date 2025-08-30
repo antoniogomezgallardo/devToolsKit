@@ -159,13 +159,69 @@ src/tools/json-validator/
 └── utils.ts          # Funciones de validación
 ```
 
-### Componentes Reutilizables (Estructura Actual)
+### Estructura Completa del Proyecto
 ```
-src/components/
-├── ui/              # Componentes base (Button, Input, TextArea)
-├── layout/          # Layout components (Header, Footer)
-└── common/          # Componentes compartidos (ToolCard)
+src/
+├── components/
+│   ├── ui/              # Componentes base (Button, Input, TextArea)
+│   ├── layout/          # Layout components (Header, Footer)
+│   └── common/          # Componentes compartidos (ToolCard)
+├── tools/               # Herramientas individuales
+│   └── json-validator/  # Ejemplo implementado
+├── utils/               # Utilidades SEO y funcionales
+│   ├── analytics.ts     # Google Analytics 4 & tracking
+│   ├── structuredData.ts # Schema.org markup
+│   ├── metaTags.ts      # Meta tags dinámicos
+│   ├── sitemap.ts       # Sitemap generation
+│   ├── performance.ts   # Core Web Vitals
+│   └── constants.ts     # Configuración general
+├── config/              # Configuración analytics y SEO
+└── types/               # Definiciones TypeScript
 ```
+
+## 🔍 Utilidades SEO Implementadas
+
+### Google Analytics 4
+```typescript
+// En tu herramienta, usar para tracking
+import { trackToolUsage, trackEvent } from '../../utils/analytics';
+
+// Ejemplo de uso en tu herramienta
+trackToolUsage('mi-herramienta', 'start', { input_length: input.length });
+trackToolUsage('mi-herramienta', 'success', { output_length: result.length });
+trackEvent('custom_event', { tool_name: 'mi-herramienta', action: 'convert' });
+```
+
+### Meta Tags Dinámicos
+```typescript
+// Añadir configuración en src/utils/metaTags.ts
+export const PAGE_META_CONFIG = {
+  "/tools/mi-herramienta": {
+    title: "Mi Herramienta Online - DevToolsKit",
+    description: "Descripción SEO optimizada de mi herramienta",
+    keywords: "mi herramienta, convertir, online",
+    canonical: "https://onlinedevtoolskit.com/tools/mi-herramienta"
+  }
+};
+```
+
+### Schema.org Structured Data
+```typescript
+// Añadir en src/utils/structuredData.ts
+export const getMiHerramientaSchema = (): SoftwareApplication => ({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Mi Herramienta Online",
+  description: "Descripción de la herramienta para schema.org",
+  url: "https://onlinedevtoolskit.com/tools/mi-herramienta",
+  // ... resto de propiedades
+});
+```
+
+### Core Web Vitals (Automático)
+- Los Core Web Vitals se rastrean automáticamente
+- Performance insights se generan automáticamente  
+- No requiere configuración adicional por herramienta
 
 ## 🛠️ Estándares de Código
 
@@ -227,11 +283,12 @@ my-component.tsx
 - [ ] **Copy to clipboard**: Funcionalidad de copiar resultado
 - [ ] **Clear/Reset**: Opción de limpiar inputs
 
-### SEO & Analytics
-- [ ] **Page title**: Título descriptivo y único
-- [ ] **Meta description**: Descripción optimizada
-- [ ] **Structured data**: Schema.org markup
-- [ ] **Analytics events**: Tracking de uso
+### SEO & Analytics ✅ **Sistema Implementado**
+- [ ] **Page title**: Usar `updateMetaTags()` para títulos dinámicos
+- [ ] **Meta description**: Configurar en `PAGE_META_CONFIG` de metaTags.ts
+- [ ] **Structured data**: Añadir schema en structuredData.ts
+- [ ] **Analytics events**: Usar `trackEvent()` y `trackToolUsage()`
+- [ ] **Performance tracking**: Se añade automáticamente con Core Web Vitals
 
 ### Testing
 - [ ] **Unit tests**: Cobertura >80%

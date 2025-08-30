@@ -4,6 +4,11 @@ import { Footer } from './components/layout/Footer';
 import { ToolCard } from './components/common/ToolCard';
 import { JSONValidator } from './tools/json-validator/JSONValidator';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
+import { initializeAnalytics, trackPageView } from './utils/analytics';
+import { initializeStructuredData } from './utils/structuredData';
+import { updateMetaTags, addAppIcons } from './utils/metaTags';
+import { initializeSitemap } from './utils/sitemap';
+import { initializePerformanceMonitoring } from './utils/performance';
 
 class App {
   private app: HTMLElement;
@@ -14,6 +19,17 @@ class App {
     this.currentRoute = window.location.pathname;
     this.init();
     this.handleRouting();
+    
+    // Initialize Google Analytics
+    setTimeout(() => {
+      initializeAnalytics();
+    }, 1000);
+    
+    // Initialize sitemap utilities
+    initializeSitemap();
+    
+    // Initialize performance monitoring
+    initializePerformanceMonitoring();
   }
 
   private init(): void {
@@ -27,6 +43,11 @@ class App {
     this.app.appendChild(Footer());
     
     this.renderCurrentPage();
+    
+    // Initialize SEO optimizations
+    addAppIcons();
+    updateMetaTags(this.currentRoute);
+    initializeStructuredData();
   }
 
   private renderCurrentPage(): void {
@@ -130,27 +151,35 @@ class App {
   private renderJSONValidator(container: HTMLElement): void {
     container.innerHTML = '';
     new JSONValidator(container);
-    
-    // Update page title
-    document.title = 'Validador JSON - DevToolsKit';
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
-    if (metaDescription) {
-      metaDescription.content = 'Validador JSON online - Valida, formatea y analiza código JSON con detección de errores. Gratis, rápido y sin registro.';
-    }
   }
 
   private navigate(path: string): void {
     window.history.pushState({}, '', path);
     this.currentRoute = path;
     this.renderCurrentPage();
+    
+    // Update SEO for new page
+    setTimeout(() => {
+      updateMetaTags(path);
+      initializeStructuredData();
+    }, 50);
+    
+    // Track page view for navigation
+    setTimeout(() => {
+      trackPageView(path, document.title);
+    }, 100);
   }
 
   private handleRouting(): void {
     window.addEventListener('popstate', () => {
       this.currentRoute = window.location.pathname;
       this.renderCurrentPage();
+      
+      // Update SEO on browser navigation
+      setTimeout(() => {
+        updateMetaTags(this.currentRoute);
+        initializeStructuredData();
+      }, 50);
     });
 
     // Handle navigation clicks

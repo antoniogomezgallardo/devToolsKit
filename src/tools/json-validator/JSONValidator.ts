@@ -1,6 +1,7 @@
 import { TextArea } from '../../components/ui/TextArea';
 import { Button } from '../../components/ui/Button';
 import { validateAndFormatJSON, getJSONInfo } from './utils';
+import { trackJSONValidator, trackUserInteraction, ToolNames } from '../../utils/analytics';
 
 export class JSONValidator {
   private container: HTMLElement;
@@ -152,6 +153,9 @@ export class JSONValidator {
     const input = this.inputTextArea.value;
     const result = validateAndFormatJSON(input);
 
+    // Track validation attempt
+    trackJSONValidator.validate(input.length);
+
     if (result.isValid && result.formatted) {
       this.outputTextArea.value = result.formatted;
       this.updateStatus('✅ JSON válido y formateado', 'success');
@@ -159,6 +163,9 @@ export class JSONValidator {
       
       const info = getJSONInfo(input);
       this.updateInfo(info);
+      
+      // Track successful validation
+      trackJSONValidator.success(input.length, result.formatted.length);
     } else {
       this.outputTextArea.value = '';
       this.copyBtn.disabled = true;
@@ -170,12 +177,18 @@ export class JSONValidator {
       
       this.updateStatus(errorMsg, 'error');
       this.updateInfo(null);
+      
+      // Track validation error
+      trackJSONValidator.error(input.length, result.error || 'unknown_error');
     }
   }
 
   private clearAll(): void {
     this.inputTextArea.value = '';
     this.clearOutput();
+    
+    // Track clear action
+    trackUserInteraction.clearInput(ToolNames.JSON_VALIDATOR);
   }
 
   private clearOutput(): void {
@@ -191,6 +204,9 @@ export class JSONValidator {
       const originalText = this.copyBtn.textContent;
       this.copyBtn.textContent = '¡Copiado!';
       this.copyBtn.classList.add('bg-green-100', 'text-green-700');
+      
+      // Track copy action
+      trackUserInteraction.copyResult(ToolNames.JSON_VALIDATOR);
       
       setTimeout(() => {
         this.copyBtn.textContent = originalText;
