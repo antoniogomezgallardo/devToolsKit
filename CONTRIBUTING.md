@@ -20,6 +20,118 @@ git pull origin develop
 git checkout -b feature/nueva-herramienta
 ```
 
+## 🌊 GitFlow Workflow
+
+### Estructura de Ramas
+```
+main ─────────────●─────────●─────────●  (Production releases)
+                 /         /         /
+develop ────●────●────●────●────●────●    (Integration branch)
+           /         /         /
+feature/  ●─────────●         /          (New features)
+release/        ●─────────────●          (Release preparation)  
+hotfix/              ●───●               (Critical production fixes)
+```
+
+### 🎯 Tipos de Rama
+
+#### `main` - Producción
+- **Propósito**: Solo releases estables
+- **Protegida**: Requiere PR review
+- **Deploy**: Automático a producción
+- **Merge desde**: `release/*` y `hotfix/*`
+
+#### `develop` - Desarrollo Principal  
+- **Propósito**: Integración continua de features
+- **Estado**: Siempre funcional pero puede ser inestable
+- **Merge desde**: `feature/*`
+- **Merge hacia**: `release/*`
+
+#### `feature/*` - Nuevas Funcionalidades
+- **Nomenclatura**: `feature/jwt-decoder`, `feature/base64-tool`
+- **Origen**: Se crean desde `develop`
+- **Destino**: Se mergean a `develop`
+- **Duración**: Corta (1-3 días máximo)
+
+#### `release/*` - Preparación de Release
+- **Nomenclatura**: `release/v0.2.0`
+- **Propósito**: Estabilización y testing final
+- **Origen**: Se crean desde `develop`
+- **Destino**: Se mergean a `main` y `develop`
+
+#### `hotfix/*` - Correcciones Críticas
+- **Nomenclatura**: `hotfix/fix-json-parser`
+- **Propósito**: Bugs críticos en producción
+- **Origen**: Se crean desde `main`
+- **Destino**: Se mergean a `main` y `develop`
+
+### 🚀 Workflows Prácticos
+
+#### Desarrollar Nueva Feature
+```bash
+# 1. Asegurarse de estar en develop actualizado
+git checkout develop
+git pull origin develop
+
+# 2. Crear rama de feature
+git checkout -b feature/jwt-decoder
+
+# 3. Desarrollar la feature
+# ... hacer cambios, commits, etc.
+
+# 4. Finalizar feature
+git checkout develop
+git pull origin develop  # Por si hay cambios nuevos
+git merge feature/jwt-decoder
+git push origin develop
+git branch -d feature/jwt-decoder  # Limpiar rama local
+```
+
+#### Crear Release
+```bash
+# 1. Desde develop, crear rama de release
+git checkout develop
+git pull origin develop
+git checkout -b release/v0.2.0
+
+# 2. Hacer ajustes finales (version bump, changelog, etc.)
+# 3. Merge a main
+git checkout main
+git pull origin main
+git merge release/v0.2.0
+git tag v0.2.0
+git push origin main --tags
+
+# 4. Merge de vuelta a develop
+git checkout develop
+git merge release/v0.2.0
+git push origin develop
+git branch -d release/v0.2.0
+```
+
+#### Hotfix Crítico
+```bash
+# 1. Desde main, crear hotfix
+git checkout main
+git pull origin main
+git checkout -b hotfix/critical-bug
+
+# 2. Hacer fix mínimo
+# ... commit del fix
+
+# 3. Merge a main
+git checkout main
+git merge hotfix/critical-bug
+git tag v0.1.2  # Bump patch version
+git push origin main --tags
+
+# 4. Merge a develop también
+git checkout develop
+git merge hotfix/critical-bug
+git push origin develop
+git branch -d hotfix/critical-bug
+```
+
 ### 3. Desarrollo
 ```bash
 npm run dev  # Servidor de desarrollo con Parcel
