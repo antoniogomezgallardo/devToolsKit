@@ -1,11 +1,11 @@
 import { Tool } from '../types';
 
 export const SITE_CONFIG = {
-  name: 'DevToolsKit',
+  name: 'Online DevToolsKit',
   description: '🛠️ Portal de herramientas online para desarrolladores - Rápido, minimalista y sin registro',
-  url: 'https://devtoolskit.vercel.app',
-  author: 'DevToolsKit Team',
-  keywords: ['herramientas desarrolladores', 'tools online', 'json validator', 'base64', 'jwt decoder']
+  url: 'https://onlinedevtoolskit.com',
+  author: 'Online DevToolsKit Team',
+  keywords: ['herramientas desarrolladores', 'tools online', 'json validator', 'base64', 'jwt decoder', 'devtools', 'utilities']
 };
 
 export const TOOLS: Tool[] = [
