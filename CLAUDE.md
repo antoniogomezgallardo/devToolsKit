@@ -243,9 +243,37 @@ npm run test:ui      # UI visual para tests
 - **Statements**: >80%
 
 ### **¿Cuándo ejecutar tests?**
-- **Antes de commit**: `npm run test:run`
+- **Antes de commit**: `npm run test:run && npm run test:e2e`
 - **Al desarrollar**: `npm run test` (watch mode)
 - **CI/CD**: Automático en GitHub Actions
+- **Setup inicial**: `npm run playwright:install` (solo una vez)
+
+## 🛡️ Branch Protection Policy - IMPLEMENTADO ✅
+
+### **⚠️ CRITICAL: Tests son OBLIGATORIOS antes de mergear a main**
+
+**GitHub Actions CI/CD configurado para:**
+- **Unit Tests** (Vitest): Lógica de utilidades ✅
+- **E2E Tests** (Playwright): Flujo completo usuario ✅  
+- **Type Check**: Verificación TypeScript ✅
+- **Build Test**: Compilación exitosa ✅
+
+**Branch Protection Rules:**
+- `main`: **PROTEGIDA** - Solo merge con PR + todos los tests ✅
+- `develop`: Abierta para desarrollo, pero con CI/CD
+- `feature/*`: CI/CD automático en push
+
+**Workflow Enforced:**
+1. Desarrollar en `feature/*` branch
+2. Push activa CI/CD automático
+3. **SI todos los tests pasan** → merge permitido
+4. **SI algún test falla** → merge BLOQUEADO ❌
+
+**Tests E2E incluyen:**
+- Homepage navigation y responsiveness
+- JSON Validator: validación, errores, ejemplos, copy
+- JWT Decoder: decodificación, expiración, Bearer tokens, seguridad
+- Cross-browser testing (Chrome, Firefox, Safari, Mobile)
 
 ---
 
