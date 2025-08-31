@@ -4,6 +4,7 @@ import { Footer } from './components/layout/Footer';
 import { ToolCard } from './components/common/ToolCard';
 import { JSONValidator } from './tools/json-validator/JSONValidator';
 import { JWTDecoder } from './tools/jwt-decoder/JWTDecoder';
+import { LocatorGenerator } from './tools/locator-generator/LocatorGenerator';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { initializeStructuredData } from './utils/structuredData';
@@ -63,6 +64,9 @@ class App {
         break;
       case '/tools/jwt-decoder':
         this.renderJWTDecoder(mainContent);
+        break;
+      case '/tools/locator-generator':
+        this.renderLocatorGenerator(mainContent);
         break;
       default:
         this.renderHomePage(mainContent);
@@ -160,6 +164,13 @@ class App {
   private renderJWTDecoder(container: HTMLElement): void {
     container.innerHTML = '';
     new JWTDecoder(container);
+  }
+
+  private renderLocatorGenerator(container: HTMLElement): void {
+    container.innerHTML = '';
+    new LocatorGenerator(container, {
+      containerId: 'locator-generator-container'
+    });
   }
 
   private navigate(path: string): void {
