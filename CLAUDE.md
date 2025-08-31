@@ -93,9 +93,18 @@ git push origin develop
 
 ## 🛠️ Development Commands
 
+### 🚀 Local Development:
+```bash
+# Ejecutar servidor local
+npm run dev          # Servidor en http://localhost:1234
+
+# Quick setup para nuevos desarrolladores  
+git clone https://github.com/antoniogomezgallardo/devToolsKit.git
+cd devToolsKit && npm install && npm run dev
+```
+
 ### Build & Test:
 ```bash
-npm run dev          # Development server
 npm run build        # Production build
 npm run type-check   # TypeScript verification
 npm run test         # Run tests in watch mode

@@ -83,36 +83,83 @@ devToolsKit/
 └── docs/                # Documentación completa
 ```
 
-## 🚦 Desarrollo
+## 🚦 Desarrollo Local
 
 ### Prerequisitos
-- Node.js >= 20.19.0
-- npm >= 10.x
+- **Node.js** >= 20.19.0
+- **npm** >= 10.x
+- **Git** (para clonar el repositorio)
 
-### Instalación
+### 🚀 Instalación y Ejecución (Paso a Paso)
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/antoniogomezgallardo/devToolsKit.git
+   cd devToolsKit
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Ejecutar en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
+   
+4. **Abrir en el navegador:**
+   - 🌐 **URL local**: http://localhost:1234
+   - El servidor se recarga automáticamente al hacer cambios
+   - Todas las herramientas funcionan localmente
+
+### 🛠️ Comandos de Desarrollo
+
+#### **Desarrollo:**
 ```bash
-npm install
+npm run dev          # 🚀 Servidor local en http://localhost:1234
 ```
 
-### Desarrollo
+#### **Build y Deploy:**
 ```bash
-npm run dev          # Servidor local con Parcel
+npm run build        # 📦 Build optimizado para producción
+npm run vercel-build # ☁️ Build específico para Vercel
+npm run preview      # 👀 Preview del build local
 ```
 
-### Build
+#### **Testing:**
 ```bash
-npm run build        # Build optimizado para producción
-npm run vercel-build # Build específico para Vercel
-npm run preview      # Preview del build
+npm run test         # 🧪 Ejecutar tests en modo watch
+npm run test:run     # ✅ Ejecutar tests una vez
+npm run test:coverage # 📊 Tests con reporte de coverage
+npm run test:ui      # 🎨 UI visual para tests
 ```
 
-### Verificación
+#### **Verificación:**
 ```bash
-npm run type-check   # Verificar tipos TypeScript
-npm run test         # Ejecutar tests en modo watch
-npm run test:run     # Ejecutar tests una vez
-npm run test:coverage # Tests con reporte de coverage
+npm run type-check   # 🔍 Verificar tipos TypeScript
 ```
+
+### 🌟 Desarrollo Rápido
+
+**Para empezar a desarrollar inmediatamente:**
+```bash
+git clone https://github.com/antoniogomezgallardo/devToolsKit.git
+cd devToolsKit
+npm install && npm run dev
+# ¡Listo! Abre http://localhost:1234 en tu navegador
+```
+
+### 🔧 Solución de Problemas
+
+**Si el servidor no inicia:**
+- Verifica que Node.js >= 20.19.0: `node --version`
+- Limpia node_modules: `rm -rf node_modules && npm install`
+- Verifica que el puerto 1234 esté libre
+
+**Si los tests fallan:**
+- Ejecuta `npm run type-check` primero
+- Verifica que todas las dependencias estén instaladas
 
 ## 📊 SEO y Performance
 
