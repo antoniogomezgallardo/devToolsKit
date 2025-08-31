@@ -58,7 +58,8 @@ devToolsKit/
 │   │   ├── layout/       # Layout (Header, Footer)
 │   │   └── ui/           # UI básicos (Button, Input, TextArea)
 │   ├── tools/           # Herramientas individuales
-│   │   └── json-validator/  # JSON Validator implementado
+│   │   ├── json-validator/  # JSON Validator implementado
+│   │   └── jwt-decoder/     # JWT Decoder implementado
 │   ├── utils/           # Utilidades y SEO
 │   │   ├── analytics.ts    # Google Analytics 4 & tracking
 │   │   ├── structuredData.ts  # Schema.org markup
@@ -69,6 +70,11 @@ devToolsKit/
 │   ├── config/          # Configuración analytics
 │   ├── styles/          # Estilos CSS adicionales
 │   └── types/           # Definiciones TypeScript
+├── tests/               # Testing framework
+│   ├── unit/           # Tests unitarios
+│   ├── integration/    # Tests de integración
+│   └── e2e/           # Tests end-to-end
+├── .github/workflows/   # CI/CD con GitHub Actions
 ├── public/              # Archivos estáticos optimizados para SEO
 │   ├── robots.txt       # Directivas para crawlers
 │   ├── sitemap.xml      # Mapa del sitio optimizado
@@ -103,6 +109,9 @@ npm run preview      # Preview del build
 ### Verificación
 ```bash
 npm run type-check   # Verificar tipos TypeScript
+npm run test         # Ejecutar tests en modo watch
+npm run test:run     # Ejecutar tests una vez
+npm run test:coverage # Tests con reporte de coverage
 ```
 
 ## 📊 SEO y Performance
@@ -154,11 +163,14 @@ npm run type-check   # Verificar tipos TypeScript
 - [x] **PWA manifest** configurado
 - [ ] AdSense integración (listo para solicitar)
 
-### Fase 3: Expansión (Mes 2)
-- [ ] 10 herramientas adicionales
+### Fase 3: Expansión (En Progreso)
+- [x] **Testing Framework** ✅ Vitest + GitHub Actions CI/CD
+- [ ] Base64 Encoder/Decoder
+- [ ] Generador de contraseñas  
+- [ ] Generador de paleta de colores
+- [ ] 6+ herramientas adicionales
 - [ ] A/B testing
 - [ ] Optimización conversión
-- [ ] Marketing content
 
 ## 🤝 Contribución
 
