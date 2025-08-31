@@ -10,7 +10,7 @@
     "url": "https://github.com/antoniogomezgallardo/devToolsKit"
   },
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "parcel index.html --port 1234 --hmr-port 1235",
     "build": "parcel build index.html --dist-dir dist --public-url ./",
     "vercel-build": "parcel build index.html --dist-dir dist --public-url ./",
     "preview": "parcel serve dist",

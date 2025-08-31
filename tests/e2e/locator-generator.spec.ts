@@ -78,15 +78,15 @@ test.describe('Locator Generator Tool', () => {
     await expect(page.getByText('✅ HTML analizado correctamente')).toBeVisible();
     
     // Click generate button for the element
-    await page.getByRole('button', { name: 'Generate' }).click();
+    await page.locator('.generate-locators-btn').first().click();
     
     // Should show locators section
     await expect(page.getByText('⚡ Locators Generados')).toBeVisible();
     
     // Should show different locator types
-    await expect(page.getByText('DATA-TESTID')).toBeVisible();
-    await expect(page.getByText('ID')).toBeVisible();
-    await expect(page.getByText('ROLE')).toBeVisible();
+    await expect(page.locator('.bg-green-100.text-green-800').getByText('DATA-TESTID')).toBeVisible();
+    await expect(page.locator('.bg-blue-100').getByText('ID')).toBeVisible();
+    await expect(page.locator('.bg-purple-100').getByText('ROLE')).toBeVisible();
     
     // Should show robustness scores
     await expect(page.getByText('Robustez:')).toBeVisible();
@@ -122,7 +122,7 @@ test.describe('Locator Generator Tool', () => {
     await page.getByRole('button', { name: '🔍 Analizar HTML' }).click();
     await expect(page.getByText('✅ HTML analizado correctamente')).toBeVisible();
     
-    await page.getByRole('button', { name: 'Generate' }).click();
+    await page.locator('.generate-locators-btn').first().click();
     await expect(page.getByText('⚡ Locators Generados')).toBeVisible();
     
     // Wait for locators to be generated
@@ -156,7 +156,7 @@ test.describe('Locator Generator Tool', () => {
     // Input HTML and generate locators
     await page.getByPlaceholder('Pega aquí tu código HTML...').fill(sampleHTML);
     await page.getByRole('button', { name: '🔍 Analizar HTML' }).click();
-    await page.getByRole('button', { name: 'Generate' }).click();
+    await page.locator('.generate-locators-btn').first().click();
     
     // Should show Cypress-specific code
     await expect(page.getByText('CYPRESS Code:')).toBeVisible();
@@ -193,10 +193,10 @@ test.describe('Locator Generator Tool', () => {
     // Generate locators with new options
     await page.getByPlaceholder('Pega aquí tu código HTML...').fill(sampleHTML);
     await page.getByRole('button', { name: '🔍 Analizar HTML' }).click();
-    await page.getByRole('button', { name: 'Generate' }).click();
+    await page.locator('.generate-locators-btn').first().click();
     
     // Should include XPath locators
-    await expect(page.getByText('XPATH')).toBeVisible();
+    await expect(page.locator('#locatorsContainer').getByText('XPATH')).toBeVisible();
     
     // Should include fragile class locators
     await expect(page.getByText('.mt-4')).toBeVisible();
@@ -250,7 +250,7 @@ test.describe('Locator Generator Tool', () => {
     await page.getByRole('button', { name: '🔍 Analizar HTML' }).click();
     
     // Generate for first element (should be stable with data-testid)
-    await page.getByRole('button', { name: 'Generate' }).first().click();
+    await page.locator('.generate-locators-btn').first().first().click();
     
     // Should show high robustness score (9-10)
     await expect(page.getByText('Robustez: 10/10')).toBeVisible();
@@ -272,7 +272,7 @@ test.describe('Locator Generator Tool', () => {
     // Generate locators
     await page.getByPlaceholder('Pega aquí tu código HTML...').fill(sampleHTML);
     await page.getByRole('button', { name: '🔍 Analizar HTML' }).click();
-    await page.getByRole('button', { name: 'Generate' }).click();
+    await page.locator('.generate-locators-btn').first().click();
     
     // Should show recommendations section
     await expect(page.getByText('💡 Recomendaciones:')).toBeVisible();
@@ -335,7 +335,7 @@ test.describe('Locator Generator Tool', () => {
       // Generate locators
       await page.getByPlaceholder('Pega aquí tu código HTML...').fill(sampleHTML);
       await page.getByRole('button', { name: '🔍 Analizar HTML' }).click();
-      await page.getByRole('button', { name: 'Generate' }).click();
+      await page.locator('.generate-locators-btn').first().click();
       
       // Should show framework-specific code
       await expect(page.getByText(framework.expected)).toBeVisible();

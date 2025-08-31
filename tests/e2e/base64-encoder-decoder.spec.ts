@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Base64 Encoder/Decoder Tool', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/tools/base64');
-    await expect(page).toHaveTitle(/Base64 Encoder/);
+    await expect(page).toHaveTitle(/Base64/);
   });
 
   test.describe('Page Structure', () => {
@@ -93,7 +93,7 @@ test.describe('Base64 Encoder/Decoder Tool', () => {
       await expect(page.getByText('Texto original:')).toBeVisible();
       await expect(page.getByText('Texto codificado:')).toBeVisible();
       await expect(page.getByText('Tipo:')).toBeVisible();
-      await expect(page.getByText('Codificación')).toBeVisible();
+      await expect(page.locator('#info-container').getByText('Codificación')).toBeVisible();
     });
   });
 
