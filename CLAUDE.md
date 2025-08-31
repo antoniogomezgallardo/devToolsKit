@@ -78,10 +78,11 @@ git push origin develop
 - Performance insights automáticos ✅
 
 ### 🎯 Phase 3: Expansión - CURRENT
+- [x] **JWT Decoder** ✅ Implementado completamente
+- [x] **Testing Framework** ✅ Vitest + GitHub Actions CI/CD
 - [ ] Google Search Console submission
 - [ ] Google AdSense aplicación (foundation lista)
-- [ ] JWT Decoder, Base64, Password Gen, Color Palette
-- [ ] Testing framework (Jest + Testing Library)
+- [ ] Base64 Encoder/Decoder, Password Gen, Color Palette
 - [ ] WCAG 2.1 AA accessibility audit
 
 ### 🛠️ Technical Context:
@@ -97,6 +98,9 @@ git push origin develop
 npm run dev          # Development server
 npm run build        # Production build
 npm run type-check   # TypeScript verification
+npm run test         # Run tests in watch mode
+npm run test:run     # Run tests once
+npm run test:coverage # Run tests with coverage report
 ```
 
 ### SEO Tools Available:
@@ -201,6 +205,38 @@ release: bump version to v0.4.0
    ```
 
 **🔄 El sistema base (`trackToolUsage`, `trackPageView`) ya funciona para cualquier herramienta sin cambios.**
+
+## 🧪 Testing Strategy - IMPLEMENTADO ✅
+
+### **Framework: Vitest + Testing Library**
+- **Unit Tests**: `tests/unit/` - Utils y funciones puras
+- **Integration Tests**: `tests/integration/` - Componentes completos
+- **E2E Tests**: `tests/e2e/` - Flujos de usuario completos
+
+### **CI/CD: GitHub Actions** ✅
+- **Continuous Integration**: Tests automáticos en push/PR
+- **Type Checking**: TypeScript verification automática
+- **Build Verification**: Asegurar que el build funciona
+- **Coverage Reports**: Reporte de cobertura automático
+
+### **Commands Available**:
+```bash
+npm run test         # Tests en modo watch
+npm run test:run     # Tests una vez 
+npm run test:coverage # Tests con coverage
+npm run test:ui      # UI visual para tests
+```
+
+### **Coverage Targets**:
+- **Branches**: >80%
+- **Functions**: >80%
+- **Lines**: >80%
+- **Statements**: >80%
+
+### **¿Cuándo ejecutar tests?**
+- **Antes de commit**: `npm run test:run`
+- **Al desarrollar**: `npm run test` (watch mode)
+- **CI/CD**: Automático en GitHub Actions
 
 ---
 
