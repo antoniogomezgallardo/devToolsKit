@@ -25,7 +25,12 @@ git checkout develop
 git pull origin develop
 git checkout -b feature/descriptive-name
 
-# Finish feature
+# Finish feature (RECOMMENDED: Use PR)
+git push origin feature/descriptive-name
+# Then create PR: feature/descriptive-name → develop
+# After PR merge: git branch -d feature/descriptive-name
+
+# Alternative: Direct merge (solo para cambios menores)
 git checkout develop
 git merge feature/descriptive-name --no-ff
 git branch -d feature/descriptive-name
@@ -265,9 +270,16 @@ npm run test:ui      # UI visual para tests
 
 **Workflow Enforced:**
 1. Desarrollar en `feature/*` branch
-2. Push activa CI/CD automático
-3. **SI todos los tests pasan** → merge permitido
-4. **SI algún test falla** → merge BLOQUEADO ❌
+2. Push branch y crear **Pull Request** → develop
+3. CI/CD se ejecuta automáticamente en PR
+4. **SI todos los tests pasan** → PR merge permitido ✅
+5. **SI algún test falla** → PR merge BLOQUEADO ❌
+
+**🔄 BEST PRACTICE: Usar Pull Requests para:**
+- **Code review** antes de merge
+- **CI/CD validation** automática  
+- **Discusión** de cambios
+- **Historial** claro de decisiones
 
 **Tests E2E incluyen:**
 - Homepage navigation y responsiveness

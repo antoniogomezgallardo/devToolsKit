@@ -69,9 +69,35 @@ npm run test:ui              # UI visual para tests
 
 ### E2E Tests
 ```bash
-npm run test:e2e             # Ejecutar tests E2E
+npm run test:e2e             # Ejecutar todos los tests E2E
 npm run test:e2e:ui          # E2E con UI visual
 npm run test:e2e:headed      # E2E con navegador visible
+```
+
+#### Ejecutar Tests E2E Específicos
+```bash
+# Un archivo específico
+npx playwright test homepage.spec.ts
+npx playwright test json-validator.spec.ts
+npx playwright test jwt-decoder.spec.ts
+
+# Con proyecto específico (solo Chromium)
+npx playwright test homepage.spec.ts --project=chromium
+
+# Test específico por nombre
+npx playwright test --grep "should load successfully"
+npx playwright test --grep "SEO meta tags"
+
+# Con interfaz visual para selección
+npx playwright test --ui
+npx playwright test json-validator.spec.ts --ui
+
+# Para debugging (navegador visible)
+npx playwright test homepage.spec.ts --headed
+npx playwright test --grep "JWT" --headed --debug
+
+# Con timeout personalizado
+npx playwright test homepage.spec.ts --timeout=10000
 ```
 
 ### All Tests
@@ -147,6 +173,154 @@ npm run test:run && npm run test:e2e  # Todos los tests (recomendado antes de co
 - **Coverage Report**: Unit test coverage
 - **Playwright Report**: E2E test results and screenshots
 - **Build Assets**: Verified production build
+
+## 🎯 Playwright E2E Testing Guide
+
+### Ejecutar Tests Específicos
+
+#### Por Archivo
+```bash
+# Ejecutar todos los tests de un archivo específico
+npx playwright test homepage.spec.ts
+npx playwright test json-validator.spec.ts  
+npx playwright test jwt-decoder.spec.ts
+
+# Solo en Chromium (más rápido para desarrollo)
+npx playwright test homepage.spec.ts --project=chromium
+```
+
+#### Por Nombre de Test
+```bash
+# Buscar test por nombre parcial
+npx playwright test --grep "should load successfully"
+npx playwright test --grep "SEO meta tags"
+npx playwright test --grep "JWT"
+
+# Combinado con archivo específico
+npx playwright test jwt-decoder.spec.ts --grep "decode valid JWT"
+```
+
+#### Modos de Ejecución
+
+**🎨 Modo Visual (Recomendado para desarrollo):**
+```bash
+# UI interactiva para seleccionar y ejecutar tests
+npx playwright test --ui
+
+# UI para archivo específico
+npx playwright test json-validator.spec.ts --ui
+```
+
+**🐛 Modo Debug:**
+```bash
+# Navegador visible para ver qué pasa
+npx playwright test homepage.spec.ts --headed
+
+# Debug paso a paso (pausa automáticamente)
+npx playwright test --grep "navigation" --debug
+
+# Con timeout personalizado (útil para debugging)
+npx playwright test homepage.spec.ts --timeout=30000
+```
+
+**⚡ Modo Rápido:**
+```bash
+# Solo Chromium (configurado por defecto)
+npx playwright test homepage.spec.ts
+
+# Con timeout más corto
+npx playwright test json-validator.spec.ts --timeout=5000
+```
+
+### Reportes y Debugging
+
+#### Ver Reportes
+```bash
+# Ver último reporte HTML
+npx playwright show-report
+
+# Generar reporte después de ejecutar tests
+npx playwright test --reporter=html
+```
+
+#### Screenshots y Videos
+```bash
+# Los screenshots automáticos se guardan en:
+# test-results/[test-name]/test-failed-[n].png
+
+# Los videos se guardan en:
+# test-results/[test-name]/video.webm
+```
+
+### Ejemplos Prácticos
+
+#### Desarrollo de Nueva Feature
+```bash
+# 1. Ejecutar test específico mientras desarrollas
+npx playwright test --grep "should validate JSON" --headed
+
+# 2. Ver en UI para iterar rápido
+npx playwright test json-validator.spec.ts --ui
+
+# 3. Test final antes de commit
+npx playwright test json-validator.spec.ts
+```
+
+#### Debugging de Test Fallido
+```bash
+# 1. Ejecutar con navegador visible
+npx playwright test --grep "failing-test-name" --headed
+
+# 2. Debug paso a paso
+npx playwright test --grep "failing-test-name" --debug
+
+# 3. Ver reporte con screenshots
+npx playwright show-report
+```
+
+#### Testing Cross-Browser (si habilitado)
+```bash
+# Todos los navegadores
+npx playwright test homepage.spec.ts
+
+# Solo Firefox
+npx playwright test homepage.spec.ts --project=firefox
+
+# Solo móvil
+npx playwright test homepage.spec.ts --project="Mobile Chrome"
+```
+
+### Configuración Actual
+
+El proyecto está configurado para ejecutar solo en **Chromium** por defecto para mayor velocidad:
+
+```typescript
+// playwright.config.ts
+projects: [
+  {
+    name: 'chromium',
+    use: { ...devices['Desktop Chrome'] },
+  },
+  // Firefox, Safari y móviles comentados para velocidad
+],
+```
+
+### Tips de Performance
+
+**✅ Más Rápido:**
+```bash
+npx playwright test homepage.spec.ts  # Solo Chromium
+```
+
+**🐌 Más Lento:**
+```bash
+npx playwright test homepage.spec.ts --project=firefox --project=webkit
+```
+
+**🎯 Para CI/CD:**
+```bash
+npm run test:e2e  # Configuración optimizada para CI
+```
 
 ## 🔧 Test Development Guidelines
 

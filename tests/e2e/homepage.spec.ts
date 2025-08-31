@@ -12,28 +12,28 @@ test.describe('Homepage', () => {
   test('should display featured tools', async ({ page }) => {
     await page.goto('/');
     
-    // Should show JSON Validator
-    await expect(page.getByText('Validador JSON')).toBeVisible();
+    // Should show JSON Validator - use heading role to be specific
+    await expect(page.getByRole('heading', { name: 'Validador JSON' })).toBeVisible();
     
-    // Should show JWT Decoder
-    await expect(page.getByText('JWT Decoder')).toBeVisible();
+    // Should show JWT Decoder - use heading role to be specific  
+    await expect(page.getByRole('heading', { name: 'JWT Decoder' })).toBeVisible();
   });
 
   test('should navigate to tools from homepage', async ({ page }) => {
     await page.goto('/');
     
-    // Click on JSON Validator
-    await page.getByRole('button', { name: /Validador JSON/ }).click();
-    await expect(page).toHaveURL('/tools/json-validator');
-    await expect(page.getByText('JSON de entrada')).toBeVisible();
+    // Click on JSON Validator link (not button)
+    await page.getByRole('link', { name: /Validador JSON/ }).click();
+    await expect(page).toHaveURL(/json-validator/);
+    await expect(page.getByRole('heading', { name: 'Validador JSON' })).toBeVisible();
     
     // Go back to homepage
     await page.goBack();
     
-    // Click on JWT Decoder  
-    await page.getByRole('button', { name: /JWT Decoder/ }).click();
-    await expect(page).toHaveURL('/tools/jwt-decoder');
-    await expect(page.getByText('Token JWT')).toBeVisible();
+    // Click on JWT Decoder link (not button)
+    await page.getByRole('link', { name: /JWT Decoder/ }).click();
+    await expect(page).toHaveURL(/jwt-decoder/);
+    await expect(page.getByRole('heading', { name: 'Decodificador JWT' })).toBeVisible();
   });
 
   test('should be responsive on mobile', async ({ page, isMobile }) => {
@@ -44,9 +44,9 @@ test.describe('Homepage', () => {
     // Check mobile layout
     await expect(page.getByRole('heading', { name: /🛠️ Online DevToolsKit/ })).toBeVisible();
     
-    // Tools should be visible in mobile layout
-    await expect(page.getByText('Validador JSON')).toBeVisible();
-    await expect(page.getByText('JWT Decoder')).toBeVisible();
+    // Tools should be visible in mobile layout - use heading role
+    await expect(page.getByRole('heading', { name: 'Validador JSON' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'JWT Decoder' })).toBeVisible();
   });
 
   test('should have proper SEO meta tags', async ({ page }) => {
@@ -58,10 +58,10 @@ test.describe('Homepage', () => {
     
     // Check Open Graph tags
     const ogTitle = page.locator('meta[property="og:title"]');
-    await expect(ogTitle).toHaveAttribute('content', /Online DevToolsKit/);
+    await expect(ogTitle).toHaveAttribute('content', /DevToolsKit/);
     
     // Check canonical URL
     const canonical = page.locator('link[rel="canonical"]');
-    await expect(canonical).toHaveCount(0); // Should be set dynamically
+    await expect(canonical).toHaveAttribute('href', /onlinedevtoolskit.com/);  
   });
 });

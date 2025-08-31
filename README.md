@@ -237,8 +237,10 @@ npm install && npm run dev
 **Workflow de contribución:**
 1. Crear rama desde `develop`
 2. Desarrollar feature + tests
-3. Push activa CI/CD automático
-4. Solo si todos los tests pasan → merge permitido
+3. Push rama y **crear Pull Request** → develop
+4. CI/CD se ejecuta automáticamente en PR
+5. Code review (opcional pero recomendado)
+6. Solo si todos los tests pasan → PR merge permitido ✅
 
 **Tests requeridos:**
 - 🧪 **Unit tests** (Vitest): Lógica de utilidades
