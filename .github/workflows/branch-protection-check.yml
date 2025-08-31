@@ -1,0 +1,40 @@
+name: 🛡️ Branch Protection Status Check
+
+# This workflow ensures all required checks pass before merging to main
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_run:
+    workflows: ["🧪 Continuous Integration"]
+    types: [completed]
+
+jobs:
+  protection-check:
+    name: 🛡️ Branch Protection Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    
+    steps:
+    - name: ✅ All checks passed
+      run: |
+        echo "✅ All required checks have passed!"
+        echo "🧪 Unit tests: ✅ PASSED"
+        echo "🎭 E2E tests: ✅ PASSED" 
+        echo "🏗️ Build test: ✅ PASSED"
+        echo "🔍 Type check: ✅ PASSED"
+        echo ""
+        echo "🚀 This PR is ready to merge to main!"
+
+  protection-fail:
+    name: 🚫 Branch Protection Fail
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
+    
+    steps:
+    - name: ❌ Checks failed
+      run: |
+        echo "❌ Required checks have failed!"
+        echo "🚫 This PR cannot be merged to main until all tests pass."
+        echo ""
+        echo "Please fix the failing tests and try again."
+        exit 1

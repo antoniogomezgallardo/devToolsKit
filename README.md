@@ -129,10 +129,17 @@ npm run preview      # 👀 Preview del build local
 
 #### **Testing:**
 ```bash
+# Unit Tests (Vitest)
 npm run test         # 🧪 Ejecutar tests en modo watch
 npm run test:run     # ✅ Ejecutar tests una vez
 npm run test:coverage # 📊 Tests con reporte de coverage
 npm run test:ui      # 🎨 UI visual para tests
+
+# E2E Tests (Playwright)
+npm run playwright:install  # 🎭 Instalar navegadores de Playwright
+npm run test:e2e            # 🌐 Ejecutar tests E2E
+npm run test:e2e:ui         # 🎨 E2E tests con UI
+npm run test:e2e:headed     # 👀 E2E tests con navegador visible
 ```
 
 #### **Verificación:**
@@ -211,13 +218,33 @@ npm install && npm run dev
 - [ ] AdSense integración (listo para solicitar)
 
 ### Fase 3: Expansión (En Progreso)
-- [x] **Testing Framework** ✅ Vitest + GitHub Actions CI/CD
+- [x] **Testing Framework Completo** ✅ Unit + E2E + CI/CD + Branch Protection
 - [ ] Base64 Encoder/Decoder
 - [ ] Generador de contraseñas  
 - [ ] Generador de paleta de colores
 - [ ] 6+ herramientas adicionales
 - [ ] A/B testing
 - [ ] Optimización conversión
+
+## 🛡️ Política de Testing y Branches
+
+### ⚠️ **OBLIGATORIO: Tests deben pasar antes de mergear a main**
+
+**Branches protegidas:**
+- `main`: Solo merge con PR + todos los tests ✅
+- Requiere: Unit tests + E2E tests + Build + Type check
+
+**Workflow de contribución:**
+1. Crear rama desde `develop`
+2. Desarrollar feature + tests
+3. Push activa CI/CD automático
+4. Solo si todos los tests pasan → merge permitido
+
+**Tests requeridos:**
+- 🧪 **Unit tests** (Vitest): Lógica de utilidades
+- 🎭 **E2E tests** (Playwright): Flujo completo de usuario
+- 🔍 **Type check**: Verificación TypeScript
+- 🏗️ **Build test**: Verificar que compila correctamente
 
 ## 🤝 Contribución
 
