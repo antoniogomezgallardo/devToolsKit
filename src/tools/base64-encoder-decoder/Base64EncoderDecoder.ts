@@ -1,21 +1,20 @@
 import { TextArea } from '../../components/ui/TextArea';
-import { Button } from '../../components/ui/Button';
-import { encodeBase64, decodeBase64, getBase64Stats, readFileAsBase64, formatBase64, isValidBase64 } from './utils';
+import { encodeBase64, decodeBase64, getBase64Stats, readFileAsBase64, formatBase64 } from './utils';
 import { trackUserInteraction, trackBase64EncoderDecoder, ToolNames } from '../../utils/analytics';
-import type { EncodingType, InputFormat } from './types';
+import type { EncodingType } from './types';
 
 export class Base64EncoderDecoder {
   private container: HTMLElement;
-  private inputTextArea: HTMLTextAreaElement;
-  private outputTextArea: HTMLTextAreaElement;
-  private encodeBtn: HTMLButtonElement;
-  private decodeBtn: HTMLButtonElement;
-  private clearBtn: HTMLButtonElement;
-  private copyBtn: HTMLButtonElement;
-  private fileInput: HTMLInputElement;
-  private formatBtn: HTMLButtonElement;
-  private statusDiv: HTMLElement;
-  private infoDiv: HTMLElement;
+  private inputTextArea!: HTMLTextAreaElement;
+  private outputTextArea!: HTMLTextAreaElement;
+  private encodeBtn!: HTMLButtonElement;
+  private decodeBtn!: HTMLButtonElement;
+  private clearBtn!: HTMLButtonElement;
+  private copyBtn!: HTMLButtonElement;
+  private fileInput!: HTMLInputElement;
+  private formatBtn!: HTMLButtonElement;
+  private statusDiv!: HTMLElement;
+  private infoDiv!: HTMLElement;
   private currentMode: EncodingType = 'encode';
 
   constructor(container: HTMLElement) {
