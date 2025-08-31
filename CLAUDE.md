@@ -25,7 +25,12 @@ git checkout develop
 git pull origin develop
 git checkout -b feature/descriptive-name
 
-# Finish feature
+# Finish feature (RECOMMENDED: Use PR)
+git push origin feature/descriptive-name
+# Then create PR: feature/descriptive-name → develop
+# After PR merge: git branch -d feature/descriptive-name
+
+# Alternative: Direct merge (solo para cambios menores)
 git checkout develop
 git merge feature/descriptive-name --no-ff
 git branch -d feature/descriptive-name
@@ -78,10 +83,11 @@ git push origin develop
 - Performance insights automáticos ✅
 
 ### 🎯 Phase 3: Expansión - CURRENT
+- [x] **JWT Decoder** ✅ Implementado completamente
+- [x] **Testing Framework** ✅ Vitest + GitHub Actions CI/CD
 - [ ] Google Search Console submission
 - [ ] Google AdSense aplicación (foundation lista)
-- [ ] JWT Decoder, Base64, Password Gen, Color Palette
-- [ ] Testing framework (Jest + Testing Library)
+- [ ] Base64 Encoder/Decoder, Password Gen, Color Palette
 - [ ] WCAG 2.1 AA accessibility audit
 
 ### 🛠️ Technical Context:
@@ -92,11 +98,23 @@ git push origin develop
 
 ## 🛠️ Development Commands
 
+### 🚀 Local Development:
+```bash
+# Ejecutar servidor local
+npm run dev          # Servidor en http://localhost:1234
+
+# Quick setup para nuevos desarrolladores  
+git clone https://github.com/antoniogomezgallardo/devToolsKit.git
+cd devToolsKit && npm install && npm run dev
+```
+
 ### Build & Test:
 ```bash
-npm run dev          # Development server
 npm run build        # Production build
 npm run type-check   # TypeScript verification
+npm run test         # Run tests in watch mode
+npm run test:run     # Run tests once
+npm run test:coverage # Run tests with coverage report
 ```
 
 ### SEO Tools Available:
@@ -201,6 +219,73 @@ release: bump version to v0.4.0
    ```
 
 **🔄 El sistema base (`trackToolUsage`, `trackPageView`) ya funciona para cualquier herramienta sin cambios.**
+
+## 🧪 Testing Strategy - IMPLEMENTADO ✅
+
+### **Framework: Vitest + Testing Library**
+- **Unit Tests**: `tests/unit/` - Utils y funciones puras
+- **Integration Tests**: `tests/integration/` - Componentes completos
+- **E2E Tests**: `tests/e2e/` - Flujos de usuario completos
+
+### **CI/CD: GitHub Actions** ✅
+- **Continuous Integration**: Tests automáticos en push/PR
+- **Type Checking**: TypeScript verification automática
+- **Build Verification**: Asegurar que el build funciona
+- **Coverage Reports**: Reporte de cobertura automático
+
+### **Commands Available**:
+```bash
+npm run test         # Tests en modo watch
+npm run test:run     # Tests una vez 
+npm run test:coverage # Tests con coverage
+npm run test:ui      # UI visual para tests
+```
+
+### **Coverage Targets**:
+- **Branches**: >80%
+- **Functions**: >80%
+- **Lines**: >80%
+- **Statements**: >80%
+
+### **¿Cuándo ejecutar tests?**
+- **Antes de commit**: `npm run test:run && npm run test:e2e`
+- **Al desarrollar**: `npm run test` (watch mode)
+- **CI/CD**: Automático en GitHub Actions
+- **Setup inicial**: `npm run playwright:install` (solo una vez)
+
+## 🛡️ Branch Protection Policy - IMPLEMENTADO ✅
+
+### **⚠️ CRITICAL: Tests son OBLIGATORIOS antes de mergear a main**
+
+**GitHub Actions CI/CD configurado para:**
+- **Unit Tests** (Vitest): Lógica de utilidades ✅
+- **E2E Tests** (Playwright): Flujo completo usuario ✅  
+- **Type Check**: Verificación TypeScript ✅
+- **Build Test**: Compilación exitosa ✅
+
+**Branch Protection Rules:**
+- `main`: **PROTEGIDA** - Solo merge con PR + todos los tests ✅
+- `develop`: Abierta para desarrollo, pero con CI/CD
+- `feature/*`: CI/CD automático en push
+
+**Workflow Enforced:**
+1. Desarrollar en `feature/*` branch
+2. Push branch y crear **Pull Request** → develop
+3. CI/CD se ejecuta automáticamente en PR
+4. **SI todos los tests pasan** → PR merge permitido ✅
+5. **SI algún test falla** → PR merge BLOQUEADO ❌
+
+**🔄 BEST PRACTICE: Usar Pull Requests para:**
+- **Code review** antes de merge
+- **CI/CD validation** automática  
+- **Discusión** de cambios
+- **Historial** claro de decisiones
+
+**Tests E2E incluyen:**
+- Homepage navigation y responsiveness
+- JSON Validator: validación, errores, ejemplos, copy
+- JWT Decoder: decodificación, expiración, Bearer tokens, seguridad
+- Cross-browser testing (Chrome, Firefox, Safari, Mobile)
 
 ---
 

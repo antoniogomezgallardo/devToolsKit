@@ -58,7 +58,8 @@ devToolsKit/
 │   │   ├── layout/       # Layout (Header, Footer)
 │   │   └── ui/           # UI básicos (Button, Input, TextArea)
 │   ├── tools/           # Herramientas individuales
-│   │   └── json-validator/  # JSON Validator implementado
+│   │   ├── json-validator/  # JSON Validator implementado
+│   │   └── jwt-decoder/     # JWT Decoder implementado
 │   ├── utils/           # Utilidades y SEO
 │   │   ├── analytics.ts    # Google Analytics 4 & tracking
 │   │   ├── structuredData.ts  # Schema.org markup
@@ -69,6 +70,11 @@ devToolsKit/
 │   ├── config/          # Configuración analytics
 │   ├── styles/          # Estilos CSS adicionales
 │   └── types/           # Definiciones TypeScript
+├── tests/               # Testing framework
+│   ├── unit/           # Tests unitarios
+│   ├── integration/    # Tests de integración
+│   └── e2e/           # Tests end-to-end
+├── .github/workflows/   # CI/CD con GitHub Actions
 ├── public/              # Archivos estáticos optimizados para SEO
 │   ├── robots.txt       # Directivas para crawlers
 │   ├── sitemap.xml      # Mapa del sitio optimizado
@@ -77,33 +83,90 @@ devToolsKit/
 └── docs/                # Documentación completa
 ```
 
-## 🚦 Desarrollo
+## 🚦 Desarrollo Local
 
 ### Prerequisitos
-- Node.js >= 20.19.0
-- npm >= 10.x
+- **Node.js** >= 20.19.0
+- **npm** >= 10.x
+- **Git** (para clonar el repositorio)
 
-### Instalación
+### 🚀 Instalación y Ejecución (Paso a Paso)
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/antoniogomezgallardo/devToolsKit.git
+   cd devToolsKit
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Ejecutar en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
+   
+4. **Abrir en el navegador:**
+   - 🌐 **URL local**: http://localhost:1234
+   - El servidor se recarga automáticamente al hacer cambios
+   - Todas las herramientas funcionan localmente
+
+### 🛠️ Comandos de Desarrollo
+
+#### **Desarrollo:**
 ```bash
-npm install
+npm run dev          # 🚀 Servidor local en http://localhost:1234
 ```
 
-### Desarrollo
+#### **Build y Deploy:**
 ```bash
-npm run dev          # Servidor local con Parcel
+npm run build        # 📦 Build optimizado para producción
+npm run vercel-build # ☁️ Build específico para Vercel
+npm run preview      # 👀 Preview del build local
 ```
 
-### Build
+#### **Testing:**
 ```bash
-npm run build        # Build optimizado para producción
-npm run vercel-build # Build específico para Vercel
-npm run preview      # Preview del build
+# Unit Tests (Vitest)
+npm run test         # 🧪 Ejecutar tests en modo watch
+npm run test:run     # ✅ Ejecutar tests una vez
+npm run test:coverage # 📊 Tests con reporte de coverage
+npm run test:ui      # 🎨 UI visual para tests
+
+# E2E Tests (Playwright)
+npm run playwright:install  # 🎭 Instalar navegadores de Playwright
+npm run test:e2e            # 🌐 Ejecutar tests E2E
+npm run test:e2e:ui         # 🎨 E2E tests con UI
+npm run test:e2e:headed     # 👀 E2E tests con navegador visible
 ```
 
-### Verificación
+#### **Verificación:**
 ```bash
-npm run type-check   # Verificar tipos TypeScript
+npm run type-check   # 🔍 Verificar tipos TypeScript
 ```
+
+### 🌟 Desarrollo Rápido
+
+**Para empezar a desarrollar inmediatamente:**
+```bash
+git clone https://github.com/antoniogomezgallardo/devToolsKit.git
+cd devToolsKit
+npm install && npm run dev
+# ¡Listo! Abre http://localhost:1234 en tu navegador
+```
+
+### 🔧 Solución de Problemas
+
+**Si el servidor no inicia:**
+- Verifica que Node.js >= 20.19.0: `node --version`
+- Limpia node_modules: `rm -rf node_modules && npm install`
+- Verifica que el puerto 1234 esté libre
+
+**Si los tests fallan:**
+- Ejecuta `npm run type-check` primero
+- Verifica que todas las dependencias estén instaladas
 
 ## 📊 SEO y Performance
 
@@ -154,11 +217,36 @@ npm run type-check   # Verificar tipos TypeScript
 - [x] **PWA manifest** configurado
 - [ ] AdSense integración (listo para solicitar)
 
-### Fase 3: Expansión (Mes 2)
-- [ ] 10 herramientas adicionales
+### Fase 3: Expansión (En Progreso)
+- [x] **Testing Framework Completo** ✅ Unit + E2E + CI/CD + Branch Protection
+- [ ] Base64 Encoder/Decoder
+- [ ] Generador de contraseñas  
+- [ ] Generador de paleta de colores
+- [ ] 6+ herramientas adicionales
 - [ ] A/B testing
 - [ ] Optimización conversión
-- [ ] Marketing content
+
+## 🛡️ Política de Testing y Branches
+
+### ⚠️ **OBLIGATORIO: Tests deben pasar antes de mergear a main**
+
+**Branches protegidas:**
+- `main`: Solo merge con PR + todos los tests ✅
+- Requiere: Unit tests + E2E tests + Build + Type check
+
+**Workflow de contribución:**
+1. Crear rama desde `develop`
+2. Desarrollar feature + tests
+3. Push rama y **crear Pull Request** → develop
+4. CI/CD se ejecuta automáticamente en PR
+5. Code review (opcional pero recomendado)
+6. Solo si todos los tests pasan → PR merge permitido ✅
+
+**Tests requeridos:**
+- 🧪 **Unit tests** (Vitest): Lógica de utilidades
+- 🎭 **E2E tests** (Playwright): Flujo completo de usuario
+- 🔍 **Type check**: Verificación TypeScript
+- 🏗️ **Build test**: Verificar que compila correctamente
 
 ## 🤝 Contribución
 

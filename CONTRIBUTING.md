@@ -1,233 +1,420 @@
-# Guía de Contribución - DevToolsKit
+# 🤝 Contributing to Online DevToolsKit
 
-## 🤝 Cómo Contribuir
+¡Gracias por tu interés en contribuir a DevToolsKit! Esta guía te ayudará a entender cómo colaborar de manera efectiva siguiendo nuestras políticas de calidad y testing.
 
-¡Gracias por tu interés en contribuir a DevToolsKit! Este proyecto busca ser el mejor portal de herramientas para desarrolladores en español.
+## 📋 Tabla de Contenidos
+
+- [🚀 Inicio Rápido](#-inicio-rápido)
+- [🔄 Workflow de Contribución](#-workflow-de-contribución)
+- [🧪 Estrategia de Testing](#-estrategia-de-testing)
+- [🛡️ Branch Protection](#️-branch-protection)
+- [📝 Estándares de Código](#-estándares-de-código)
+- [🛠️ Herramientas de Desarrollo](#️-herramientas-de-desarrollo)
+- [🐛 Reportar Bugs](#-reportar-bugs)
+- [💡 Sugerir Features](#-sugerir-features)
 
 ## 🚀 Inicio Rápido
 
-### 1. Fork y Clone
+### Prerequisitos
+- **Node.js** >= 20.19.0
+- **npm** >= 10.x
+- **Git** configurado
+- **Playwright** (se instala automáticamente)
+
+### Setup del Proyecto
 ```bash
-git clone https://github.com/[tu-usuario]/devToolsKit.git
+# 1. Fork el repositorio en GitHub
+# 2. Clonar tu fork
+git clone https://github.com/TU_USUARIO/devToolsKit.git
 cd devToolsKit
+
+# 3. Configurar remote upstream
+git remote add upstream https://github.com/antoniogomezgallardo/devToolsKit.git
+
+# 4. Instalar dependencias
 npm install
+
+# 5. Instalar navegadores de Playwright
+npm run playwright:install
+
+# 6. Verificar que todo funciona
+npm run dev           # Servidor local
+npm run test:run      # Unit tests
+npm run test:e2e      # E2E tests
+npm run type-check    # Verificar tipos
 ```
 
-### 2. Crear rama de feature
+## 🔄 Workflow de Contribución
+
+### ⚠️ **OBLIGATORIO: GitFlow + Pull Requests + Testing**
+
+**🚨 IMPORTANTE**: Con branch protection activada, **TODAS las contribuciones DEBEN usar Pull Requests**. Los merges directos a `main` están **bloqueados**.
+
+### 1️⃣ **Preparar tu Entorno**
 ```bash
+# Sincronizar con upstream
+git fetch upstream
 git checkout develop
-git pull origin develop
-git checkout -b feature/nueva-herramienta
-```
-
-## 🌊 GitFlow Workflow
-
-### Estructura de Ramas
-```
-main ─────────────●─────────●─────────●  (Production releases)
-                 /         /         /
-develop ────●────●────●────●────●────●    (Integration branch)
-           /         /         /
-feature/  ●─────────●         /          (New features)
-release/        ●─────────────●          (Release preparation)  
-hotfix/              ●───●               (Critical production fixes)
-```
-
-### 🎯 Tipos de Rama
-
-#### `main` - Producción
-- **Propósito**: Solo releases estables
-- **Protegida**: Requiere PR review
-- **Deploy**: Automático a producción
-- **Merge desde**: `release/*` y `hotfix/*`
-
-#### `develop` - Desarrollo Principal  
-- **Propósito**: Integración continua de features
-- **Estado**: Siempre funcional pero puede ser inestable
-- **Merge desde**: `feature/*`
-- **Merge hacia**: `release/*`
-
-#### `feature/*` - Nuevas Funcionalidades
-- **Nomenclatura**: `feature/jwt-decoder`, `feature/base64-tool`
-- **Origen**: Se crean desde `develop`
-- **Destino**: Se mergean a `develop`
-- **Duración**: Corta (1-3 días máximo)
-
-#### `release/*` - Preparación de Release
-- **Nomenclatura**: `release/v0.2.0`
-- **Propósito**: Estabilización y testing final
-- **Origen**: Se crean desde `develop`
-- **Destino**: Se mergean a `main` y `develop`
-
-#### `hotfix/*` - Correcciones Críticas
-- **Nomenclatura**: `hotfix/fix-json-parser`
-- **Propósito**: Bugs críticos en producción
-- **Origen**: Se crean desde `main`
-- **Destino**: Se mergean a `main` y `develop`
-
-### 🚀 Workflows Prácticos
-
-#### Desarrollar Nueva Feature
-```bash
-# 1. Asegurarse de estar en develop actualizado
-git checkout develop
-git pull origin develop
-
-# 2. Crear rama de feature
-git checkout -b feature/jwt-decoder
-
-# 3. Desarrollar la feature
-# ... hacer cambios, commits, etc.
-
-# 4. Finalizar feature
-git checkout develop
-git pull origin develop  # Por si hay cambios nuevos
-git merge feature/jwt-decoder
+git merge upstream/develop
 git push origin develop
-git branch -d feature/jwt-decoder  # Limpiar rama local
 ```
 
-#### Crear Release
+### 2️⃣ **Crear Feature Branch**
 ```bash
-# 1. Desde develop, crear rama de release
-git checkout develop
-git pull origin develop
-git checkout -b release/v0.2.0
+# Crear rama desde develop (NUNCA desde main)
+git checkout -b feature/nombre-descriptivo
 
-# 2. Hacer ajustes finales (version bump, changelog, etc.)
-# 3. Merge a main
-git checkout main
-git pull origin main
-git merge release/v0.2.0
-git tag v0.2.0
-git push origin main --tags
-
-# 4. Merge de vuelta a develop
-git checkout develop
-git merge release/v0.2.0
-git push origin develop
-git branch -d release/v0.2.0
+# Ejemplos de nombres válidos:
+# feature/base64-encoder
+# feature/password-generator
+# feature/improve-jwt-decoder
+# hotfix/json-validator-bug
+# fix/responsive-mobile-layout
 ```
 
-#### Hotfix Crítico
+### 3️⃣ **Desarrollar con TDD**
 ```bash
-# 1. Desde main, crear hotfix
-git checkout main
-git pull origin main
-git checkout -b hotfix/critical-bug
+# 1. Escribir tests primero (TDD approach)
+npm run test         # Unit tests en modo watch
+npm run test:e2e:ui  # E2E tests con UI visual
 
-# 2. Hacer fix mínimo
-# ... commit del fix
-
-# 3. Merge a main
-git checkout main
-git merge hotfix/critical-bug
-git tag v0.1.2  # Bump patch version
-git push origin main --tags
-
-# 4. Merge a develop también
-git checkout develop
-git merge hotfix/critical-bug
-git push origin develop
-git branch -d hotfix/critical-bug
+# 2. Implementar funcionalidad
+# 3. Verificar que todos los tests pasan
+npm run test:run     # ✅ Unit tests
+npm run test:e2e     # ✅ E2E tests  
+npm run type-check   # ✅ TypeScript
+npm run build        # ✅ Build check
 ```
 
-### 3. Desarrollo
+### 4️⃣ **Commit Guidelines**
 ```bash
-npm run dev  # Servidor de desarrollo con Parcel
+# Commits descriptivos en español
+git add .
+git commit -m "feat: implementar Base64 encoder/decoder
+
+- Agregar componente Base64Tool con validación
+- Implementar encoding/decoding seguro  
+- Añadir tests unitarios y E2E completos
+- Actualizar página principal con nueva herramienta
+- Optimizar SEO con meta tags y structured data"
+
+# Tipos de commit válidos:
+# feat: nueva funcionalidad
+# fix: corrección de bugs
+# test: añadir o modificar tests
+# refactor: refactoring sin cambios de funcionalidad
+# docs: cambios en documentación
+# style: cambios de formato, no de lógica
+# perf: mejoras de performance
+# build: cambios en build system
 ```
 
-### 4. Testing y Verificación
+### 5️⃣ **Pull Request (OBLIGATORIO)**
 ```bash
-npm run type-check  # Verificación TypeScript
-npm run build       # Verificar que el build funciona
-# Nota: Tests unitarios y linting pendientes de implementar
+# 1. Push de tu rama
+git push origin feature/nombre-descriptivo
+
+# 2. Crear Pull Request en GitHub:
+#    Base: develop ← Compare: feature/nombre-descriptivo
+#    
+# 3. El PR DEBE incluir:
+#    - Título descriptivo
+#    - Descripción detallada con checklist
+#    - Screenshots si incluye cambios visuales
+#    - Lista de tests añadidos/modificados
 ```
 
-## 📁 Estructura de Archivos
+### 6️⃣ **Template de Pull Request**
+```markdown
+## 📋 Descripción
+Breve descripción de los cambios realizados.
 
-### Añadir Nueva Herramienta
+## 🔄 Tipo de Cambio
+- [ ] 🐛 Bug fix
+- [ ] ✨ Nueva funcionalidad  
+- [ ] 💥 Breaking change
+- [ ] 📝 Actualización de documentación
+- [ ] 🔧 Refactoring
+- [ ] ⚡ Performance improvement
+
+## ✅ Checklist Pre-merge (OBLIGATORIO)
+### 🧪 Testing
+- [ ] ✅ **Unit tests pasan** (`npm run test:run`)
+- [ ] ✅ **E2E tests pasan** (`npm run test:e2e`)  
+- [ ] ✅ **Coverage >80%** en todas las métricas
+- [ ] 🧪 **Tests añadidos** para nueva funcionalidad
+- [ ] 🎭 **E2E tests incluyen** todos los casos de uso
+
+### 🔍 Code Quality  
+- [ ] ✅ **Type check sin errores** (`npm run type-check`)
+- [ ] ✅ **Build exitoso** (`npm run build`)
+- [ ] 📝 **Documentación actualizada** si es necesario
+- [ ] 🏗️ **Código sigue estándares** del proyecto
+
+### 🎨 UI/UX
+- [ ] 📱 **Responsive design** verificado
+- [ ] ♿ **Accesibilidad** (ARIA labels, semantic HTML)
+- [ ] 🎯 **Consistent design** con design system
+- [ ] 🔄 **Loading states** implementados
+
+### 🔍 SEO & Analytics
+- [ ] 🏷️ **Meta tags** configurados
+- [ ] 📊 **Analytics events** implementados
+- [ ] 🔗 **Structured data** añadido
+- [ ] 📈 **Performance optimizado**
+
+## 🧪 Testing Detallado
+### Unit Tests
+- **Archivos**: `tests/unit/tools/[nombre]/*.test.ts`
+- **Coverage**: Statement/Branch/Function/Lines >80%
+- **Tests incluyen**:
+  - [ ] Casos válidos
+  - [ ] Casos inválidos/errores
+  - [ ] Edge cases
+  - [ ] Validaciones
+
+### E2E Tests  
+- **Archivos**: `tests/e2e/[nombre].spec.ts`
+- **Navegadores**: Chrome, Firefox, Safari (desktop + mobile)
+- **Tests incluyen**:
+  - [ ] Flujo completo de usuario
+  - [ ] Input/output validation
+  - [ ] Copy functionality
+  - [ ] Clear/reset functionality
+  - [ ] Error handling
+  - [ ] Responsive behavior
+
+## 📸 Screenshots (si aplica)
+[Adjuntar capturas de pantalla]
+
+### Desktop
+![Desktop view](url)
+
+### Mobile  
+![Mobile view](url)
+
+## 🎯 Testing Instructions
+Cómo probar manualmente esta feature:
+
+1. **Setup**: `npm run dev`
+2. **Navigate**: Ir a `/tools/[nombre-herramienta]`  
+3. **Test Cases**:
+   - Input válido: [describir]
+   - Input inválido: [describir]
+   - Edge cases: [describir]
+4. **Expected Results**: [describir comportamiento esperado]
+
+## 📝 Notas Adicionales
+[Cualquier información adicional]
+
+## 🔗 Issues Relacionados
+Fixes #[número] - [descripción del issue]
 ```
-src/tools/mi-herramienta/
-├── MiHerramienta.ts  # Componente principal
-├── utils.ts          # Lógica de la herramienta (opcional)
-└── types.ts          # Tipos TypeScript (opcional)
 
-# Ejemplo actual:
-src/tools/json-validator/
-├── JSONValidator.ts  # Componente principal
-└── utils.ts          # Funciones de validación
+## 🧪 Estrategia de Testing
+
+### **🚨 OBLIGATORIO: Tests deben pasar antes de merge**
+
+Tenemos **branch protection** configurada que **BLOQUEA** merges si:
+- ❌ Unit tests fallan
+- ❌ E2E tests fallan  
+- ❌ Type check falla
+- ❌ Build falla
+
+### 🎯 Testing Architecture
+
+**No necesitamos integration tests** porque:
+- ✅ **Client-side only**: No APIs complejas
+- ✅ **Herramientas independientes**: No dependencias entre tools
+- ✅ **Simple data flow**: Input → Processing → Output
+- ✅ **E2E tests cubren** flujos completos de usuario
+
+### Unit Tests (Vitest)
+```bash
+# Comandos disponibles
+npm run test         # Modo watch
+npm run test:run     # Una ejecución
+npm run test:coverage # Con coverage report
+npm run test:ui      # UI visual para tests
 ```
 
-### Estructura Completa del Proyecto
-```
-src/
-├── components/
-│   ├── ui/              # Componentes base (Button, Input, TextArea)
-│   ├── layout/          # Layout components (Header, Footer)
-│   └── common/          # Componentes compartidos (ToolCard)
-├── tools/               # Herramientas individuales
-│   └── json-validator/  # Ejemplo implementado
-├── utils/               # Utilidades SEO y funcionales
-│   ├── analytics.ts     # Google Analytics 4 & tracking
-│   ├── structuredData.ts # Schema.org markup
-│   ├── metaTags.ts      # Meta tags dinámicos
-│   ├── sitemap.ts       # Sitemap generation
-│   ├── performance.ts   # Core Web Vitals
-│   └── constants.ts     # Configuración general
-├── config/              # Configuración analytics y SEO
-└── types/               # Definiciones TypeScript
+**Coverage mínimo requerido:**
+- **Statements**: >80%
+- **Branches**: >80%  
+- **Functions**: >80%
+- **Lines**: >80%
+
+**Configuración**: `vitest.config.ts`
+- **Environment**: jsdom (simula browser)
+- **Setup**: `tests/setup.ts`
+- **Coverage**: c8 provider con reportes HTML
+
+### E2E Tests (Playwright)
+```bash
+# Comandos disponibles  
+npm run playwright:install  # Instalar navegadores
+npm run test:e2e            # Todos los navegadores
+npm run test:e2e:ui         # Con interfaz visual
+npm run test:e2e:headed     # Con navegador visible
 ```
 
-## 🔍 Utilidades SEO Implementadas
+**Navegadores testados:**
+- ✅ **Chrome Desktop** - Chromium engine
+- ✅ **Firefox Desktop** - Gecko engine  
+- ✅ **Safari Desktop** - WebKit engine
+- ✅ **Chrome Mobile** - Pixel 5 simulation
+- ✅ **Safari Mobile** - iPhone 12 simulation
 
-### Google Analytics 4
+**Configuración**: `playwright.config.ts`
+- **Base URL**: `http://localhost:1234`  
+- **Auto start**: Server de desarrollo automático
+- **Parallel**: Tests en paralelo para velocidad
+- **Reports**: HTML, JSON, JUnit para CI/CD
+
+### 📝 Testing Guidelines por Herramienta
+
+Cada nueva herramienta **DEBE incluir**:
+
+#### Unit Tests Template
 ```typescript
-// En tu herramienta, usar para tracking
-import { trackToolUsage, trackEvent } from '../../utils/analytics';
+// tests/unit/tools/nueva-herramienta/utils.test.ts
+import { describe, test, expect } from 'vitest';
+import { validateInput, processData } from '../../../../src/tools/nueva-herramienta/utils';
 
-// Ejemplo de uso en tu herramienta
-trackToolUsage('mi-herramienta', 'start', { input_length: input.length });
-trackToolUsage('mi-herramienta', 'success', { output_length: result.length });
-trackEvent('custom_event', { tool_name: 'mi-herramienta', action: 'convert' });
-```
-
-### Meta Tags Dinámicos
-```typescript
-// Añadir configuración en src/utils/metaTags.ts
-export const PAGE_META_CONFIG = {
-  "/tools/mi-herramienta": {
-    title: "Mi Herramienta Online - DevToolsKit",
-    description: "Descripción SEO optimizada de mi herramienta",
-    keywords: "mi herramienta, convertir, online",
-    canonical: "https://onlinedevtoolskit.com/tools/mi-herramienta"
-  }
-};
-```
-
-### Schema.org Structured Data
-```typescript
-// Añadir en src/utils/structuredData.ts
-export const getMiHerramientaSchema = (): SoftwareApplication => ({
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Mi Herramienta Online",
-  description: "Descripción de la herramienta para schema.org",
-  url: "https://onlinedevtoolskit.com/tools/mi-herramienta",
-  // ... resto de propiedades
+describe('Nueva Herramienta Utils', () => {
+  describe('validateInput', () => {
+    test('should validate correct input', () => {
+      const result = validateInput('valid-input');
+      expect(result).toBe(true);
+    });
+    
+    test('should reject invalid input', () => {
+      const result = validateInput('');
+      expect(result).toBe(false);
+    });
+    
+    test('should handle edge cases', () => {
+      // Test edge cases específicos
+    });
+  });
+  
+  describe('processData', () => {
+    test('should process data correctly', () => {
+      const result = processData('input-data');
+      expect(result).toBe('expected-output');
+    });
+    
+    test('should handle errors gracefully', () => {
+      expect(() => processData(null)).toThrow('Expected error');
+    });
+  });
 });
 ```
 
-### Core Web Vitals (Automático)
-- Los Core Web Vitals se rastrean automáticamente
-- Performance insights se generan automáticamente  
-- No requiere configuración adicional por herramienta
-
-## 🛠️ Estándares de Código
-
-### TypeScript
+#### E2E Tests Template  
 ```typescript
-// ✅ Bien
+// tests/e2e/nueva-herramienta.spec.ts
+import { test, expect } from '@playwright/test';
+
+test.describe('Nueva Herramienta Tool', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/tools/nueva-herramienta');
+  });
+
+  test('should process valid input', async ({ page }) => {
+    // Test caso de uso principal
+    await page.getByPlaceholder('Input placeholder...').fill('valid-input');
+    await expect(page.getByText('Success message')).toBeVisible();
+    
+    // Verificar output
+    const output = page.getByPlaceholder('Output placeholder...');
+    await expect(output).toContainText('expected-content');
+  });
+
+  test('should handle invalid input', async ({ page }) => {
+    // Test manejo de errores
+    await page.getByPlaceholder('Input placeholder...').fill('invalid-input');
+    await expect(page.getByText('Error message')).toBeVisible();
+  });
+
+  test('should copy result to clipboard', async ({ page }) => {
+    // Test funcionalidad copy
+    await page.getByPlaceholder('Input placeholder...').fill('valid-input');
+    await page.getByRole('button', { name: 'Copiar' }).click();
+    await expect(page.getByText('¡Copiado!')).toBeVisible();
+  });
+
+  test('should clear all fields', async ({ page }) => {
+    // Test funcionalidad clear
+    await page.getByPlaceholder('Input placeholder...').fill('test-input');
+    await page.getByRole('button', { name: 'Limpiar' }).click();
+    
+    await expect(page.getByPlaceholder('Input placeholder...')).toHaveValue('');
+    await expect(page.getByPlaceholder('Output placeholder...')).toHaveValue('');
+  });
+
+  test('should work on mobile', async ({ page, isMobile }) => {
+    if (!isMobile) return;
+    
+    // Test responsive behavior
+    await expect(page.getByRole('heading')).toBeVisible();
+    // ... mobile-specific tests
+  });
+});
+```
+
+## 🛡️ Branch Protection
+
+### Configuración Actual
+
+**Protected Branches:**
+- ✅ `main` - **BLOQUEADA** para push directo
+- ✅ Require PR reviews antes de merge
+- ✅ Require status checks (CI/CD)
+- ✅ Require branches to be up to date
+
+**Required Status Checks:**
+- ✅ **Unit Tests** (`🧪 Unit Tests`)
+- ✅ **E2E Tests** (`🎭 E2E Tests`)  
+- ✅ **Type Check** (`🔍 Type Check`)
+- ✅ **Build Check** (`🏗️ Build`)
+
+### Workflow Enforcement
+
+```mermaid
+graph TD
+    A[Create Feature Branch] --> B[Write Tests]
+    B --> C[Implement Feature]
+    C --> D[Run Local Tests]
+    D --> E{All Tests Pass?}
+    E -->|No| F[Fix Issues]
+    F --> D
+    E -->|Yes| G[Push Branch]
+    G --> H[Create Pull Request]
+    H --> I[CI/CD Runs]
+    I --> J{CI/CD Success?}
+    J -->|No| K[Fix CI Issues]
+    K --> G
+    J -->|Yes| L[Review & Merge]
+    L --> M[Auto Deploy]
+```
+
+### Commands para Verificar Localmente
+```bash
+# ANTES de crear PR, ejecutar TODOS estos comandos:
+npm run test:run      # ✅ Unit tests
+npm run test:e2e      # ✅ E2E tests
+npm run type-check    # ✅ TypeScript
+npm run build         # ✅ Build check
+
+# Si ALGUNO falla, el PR será RECHAZADO automáticamente
+```
+
+## 📝 Estándares de Código
+
+### TypeScript Standards
+```typescript
+// ✅ Bien - Interfaces explícitas
 interface ToolConfig {
   id: string;
   name: string;
@@ -235,192 +422,357 @@ interface ToolConfig {
   category: ToolCategory;
 }
 
-// ❌ Mal
-const config = {
-  id: "json-validator",
-  name: "JSON Validator"  // Falta tipo
+// ✅ Bien - Tipos explícitos en funciones
+const validateInput = (input: string): ValidationResult => {
+  // Implementation
 };
+
+// ❌ Mal - Uso de `any`
+const processData = (data: any): any => {
+  return data;
+};
+
+// ✅ Bien - Error handling tipado
+type ProcessResult = 
+  | { success: true; data: string }
+  | { success: false; error: string };
 ```
 
-### Naming Conventions
+### Component Structure
 ```typescript
-// Componentes: PascalCase
-export const JsonValidator: React.FC = () => {};
-
-// Funciones: camelCase
-const validateJson = (input: string): boolean => {};
-
-// Constantes: SNAKE_CASE
-const MAX_FILE_SIZE = 1024 * 1024;
-
-// Archivos: kebab-case
-json-validator.ts
-my-component.tsx
+// Estructura estándar de herramienta
+export class MiHerramienta {
+  private container: HTMLElement;
+  private config: ToolConfig;
+  
+  constructor(container: HTMLElement, config: ToolConfig) {
+    this.container = container;
+    this.config = config;
+    this.init();
+  }
+  
+  private init(): void {
+    this.render();
+    this.setupEventListeners();
+    this.setupAnalytics();
+  }
+  
+  private render(): void {
+    // HTML generation with Tailwind
+  }
+  
+  private setupEventListeners(): void {
+    // Event handlers
+  }
+  
+  private setupAnalytics(): void {
+    // Analytics tracking
+  }
+  
+  private processInput(input: string): ProcessResult {
+    // Core business logic
+  }
+}
 ```
 
-### CSS/Tailwind
+### CSS/Tailwind Guidelines
 ```html
-<!-- ✅ Bien: Clases ordenadas -->
-<div class="flex items-center justify-center p-4 bg-white rounded-lg shadow-md">
+<!-- ✅ Bien: Classes organizadas por categoría -->
+<div class="
+  flex items-center justify-center
+  w-full h-48
+  p-4 m-2
+  bg-white border border-gray-200
+  rounded-lg shadow-md
+  hover:shadow-lg
+  focus:outline-none focus:ring-2 focus:ring-blue-500
+  transition-all duration-200
+">
 
-<!-- ❌ Mal: Clases desordenadas -->
-<div class="bg-white p-4 flex shadow-md rounded-lg justify-center items-center">
+<!-- ❌ Mal: Classes mezcladas sin orden -->
+<div class="bg-white flex p-4 shadow-md rounded-lg w-full justify-center border items-center h-48">
 ```
 
-## 📋 Checklist para Nueva Herramienta
+### File Organization
+```
+src/tools/nueva-herramienta/
+├── index.ts              # Exportar tool
+├── NuevaHerramienta.ts   # Main component  
+├── utils.ts              # Business logic
+├── types.ts              # TypeScript types
+└── constants.ts          # Tool-specific constants
 
-### Funcionalidad
-- [ ] **Input validation**: Valida entradas del usuario
-- [ ] **Error handling**: Manejo graceful de errores
-- [ ] **Edge cases**: Considera casos límite
-- [ ] **Performance**: Optimizada para archivos grandes
-- [ ] **Mobile friendly**: Funciona en dispositivos móviles
+tests/
+├── unit/tools/nueva-herramienta/
+│   ├── utils.test.ts     # Unit tests for utils
+│   └── component.test.ts # Unit tests for component
+└── e2e/
+    └── nueva-herramienta.spec.ts # E2E tests
+```
 
-### UI/UX
-- [ ] **Responsive design**: Se adapta a todas las pantallas
-- [ ] **Loading states**: Indicadores de carga
-- [ ] **Success/Error feedback**: Feedback visual claro
-- [ ] **Copy to clipboard**: Funcionalidad de copiar resultado
-- [ ] **Clear/Reset**: Opción de limpiar inputs
+## 🛠️ Herramientas de Desarrollo
 
-### SEO & Analytics ✅ **Sistema Implementado**
-- [ ] **Page title**: Usar `updateMetaTags()` para títulos dinámicos
-- [ ] **Meta description**: Configurar en `PAGE_META_CONFIG` de metaTags.ts
-- [ ] **Structured data**: Añadir schema en structuredData.ts
-- [ ] **Analytics events**: Usar `trackEvent()` y `trackToolUsage()`
-- [ ] **Performance tracking**: Se añade automáticamente con Core Web Vitals
-
-### Testing
-- [ ] **Unit tests**: Cobertura >80%
-- [ ] **Integration tests**: Flujo completo funciona
-- [ ] **Accessibility tests**: WCAG 2.1 AA
-- [ ] **Performance tests**: Core Web Vitals
-
-## 📝 Proceso de Pull Request
-
-### 1. Antes de enviar
+### Scripts Esenciales
 ```bash
-# Ejecutar todos los checks disponibles
-npm run type-check    # Verificar tipos TypeScript
-npm run build         # Verificar que el build funciona
-# Nota: Linting y tests pendientes de configurar
+# Desarrollo
+npm run dev              # Servidor local con hot reload
+
+# Testing  
+npm run test             # Unit tests en modo watch
+npm run test:run         # Unit tests una vez
+npm run test:coverage    # Coverage report
+npm run test:ui          # Visual test UI
+npm run test:e2e         # E2E tests
+npm run test:e2e:ui      # E2E con interfaz visual
+npm run test:e2e:headed  # E2E con navegador visible
+
+# Quality checks
+npm run type-check       # TypeScript verification
+npm run build           # Production build
+npm run preview         # Preview production build
+
+# Playwright
+npm run playwright:install # Install browsers
 ```
 
-### 2. Commit Messages
+### Ejecutar Tests E2E Específicos
 ```bash
-# Formato: tipo(scope): descripción
-feat(tools): add JWT decoder tool
-fix(json-validator): handle empty input
-docs(readme): update installation guide
-style(ui): improve button hover states
+# Un archivo específico
+npx playwright test homepage.spec.ts
+npx playwright test json-validator.spec.ts
+npx playwright test jwt-decoder.spec.ts
+
+# Test específico por nombre
+npx playwright test --grep "should load successfully"
+npx playwright test --grep "SEO meta tags"
+
+# Con interfaz visual (RECOMENDADO para desarrollo)
+npx playwright test --ui
+npx playwright test json-validator.spec.ts --ui
+
+# Para debugging (navegador visible)
+npx playwright test homepage.spec.ts --headed
+npx playwright test --grep "JWT" --debug
+
+# Con timeout personalizado
+npx playwright test homepage.spec.ts --timeout=10000
+
+# Ver último reporte
+npx playwright show-report
 ```
 
-### 3. PR Description Template
-```markdown
-## 🎯 Qué hace este PR
+### Development Flow
+```bash
+# 1. Start development
+npm run dev &            # Background server
+npm run test &           # Background unit tests
 
-Breve descripción de los cambios...
+# 2. Visual E2E testing during development  
+npm run test:e2e:ui      # Interactive E2E testing
 
-## ✅ Checklist
-
-- [ ] Tests pasando
-- [ ] Linting correcto
-- [ ] Responsive design
-- [ ] SEO optimizado
-- [ ] Analytics implementado
-
-## 📸 Screenshots (si aplica)
-
-[Antes] vs [Después]
-
-## 🧪 Cómo probar
-
-1. Ir a `/tool/nueva-herramienta`
-2. Probar con input válido
-3. Probar con input inválido
+# 3. Pre-commit verification
+npm run test:run && npm run test:e2e && npm run type-check && npm run build
 ```
+
+### Debugging Tools
+- **DevTools**: Chrome DevTools para debugging
+- **VS Code Extensions**:
+  - Playwright Test for VSCode
+  - Vitest Runner  
+  - TypeScript Hero
+  - Tailwind CSS IntelliSense
+- **Test Debugging**: 
+  - `test.only()` para tests específicos
+  - `page.pause()` en E2E para debugging
+  - `console.log` en unit tests (remover antes de commit)
 
 ## 🐛 Reportar Bugs
 
-### Template de Issue
+### Template de Bug Report
 ```markdown
-**Describe el bug**
-Descripción clara del problema...
+## 🐛 Descripción del Bug
+Descripción clara y concisa del problema.
 
-**Pasos para reproducir**
-1. Ir a '...'
-2. Hacer click en '....'
-3. Ver error
+## 🔄 Pasos para Reproducir
+1. Ir a 'X página'
+2. Hacer click en 'Y botón'
+3. Introducir 'Z valor'
+4. Ver error
 
-**Comportamiento esperado**
-Lo que debería pasar...
+## ✅ Comportamiento Esperado
+Descripción clara de lo que se esperaba que pasara.
 
-**Screenshots**
-Si aplica, añadir screenshots
+## ❌ Comportamiento Actual  
+Descripción clara de lo que pasa actualmente.
 
-**Entorno**
-- OS: [e.g. Windows 10]
-- Browser: [e.g. Chrome 91]
-- Device: [e.g. Desktop, Mobile]
+## 📱 Entorno
+- **OS**: [ej. macOS 13.0, Windows 11]
+- **Navegador**: [ej. Chrome 118, Firefox 119]
+- **Dispositivo**: [ej. iPhone 14, Desktop]
+- **Resolución**: [ej. 1920x1080, 375x667]
+
+## 📸 Screenshots
+[Adjuntar capturas de pantalla del problema]
+
+## 🧪 Tests Relevantes
+¿Hay algún test que capture este bug?
+- [ ] Sí - Test name: `test-name`
+- [ ] No - Este bug no está cubierto por tests
+
+## 🔍 Log de Errores
+```javascript
+// Pegar errores de console aquí
+Error: Something went wrong...
 ```
 
-## 💡 Sugerir Nuevas Herramientas
+## 🎯 Impacto
+- [ ] 🔴 Crítico - Bloquea funcionalidad principal
+- [ ] 🟡 Alto - Afecta experiencia de usuario
+- [ ] 🟢 Medio - Problema menor
+- [ ] 🔵 Bajo - Mejora cosmética
+```
+
+## 💡 Sugerir Features
 
 ### Criterios de Evaluación
-1. **Demanda**: ¿Los desarrolladores lo necesitan?
-2. **Unicidad**: ¿Ya existe algo similar?
-3. **Complejidad**: ¿Se puede implementar client-side?
-4. **SEO Potential**: ¿La gente lo busca en Google?
-5. **Monetización**: ¿Puede generar tráfico/revenue?
+1. **🎯 Demanda de usuarios**: ¿Los developers lo necesitan?
+2. **🔍 SEO Potential**: ¿La gente busca esto en Google?
+3. **⚡ Feasibilidad técnica**: ¿Se puede hacer client-side?
+4. **📊 Valor único**: ¿Ya existe en otras herramientas?
+5. **💰 Monetization**: ¿Puede generar tráfico/revenue?
 
-### Template para Propuesta
+### Template de Feature Request
 ```markdown
-**Nombre de la herramienta**
-[Nombre descriptivo]
+## 💡 Descripción de la Feature
+Descripción clara y detallada de la funcionalidad propuesta.
 
-**Descripción**
-Qué hace la herramienta...
+## 🎯 Problema que Resuelve
+¿Qué problema específico resuelve esta feature para los developers?
 
-**Casos de uso**
-- Desarrollador Frontend necesita...
-- DevOps quiere...
+## 💭 Solución Propuesta
+Describe cómo crees que debería funcionar:
 
-**Palabras clave SEO**
-- "herramienta X online"
+### Input
+- Formato: [ej. JSON, XML, Base64]
+- Validaciones: [ej. required fields]
+
+### Processing  
+- Algoritmo: [ej. encoding, parsing, validation]
+- Edge cases: [ej. large files, special characters]
+
+### Output
+- Formato: [ej. formatted JSON, converted XML]
+- Features: [ej. copy to clipboard, download]
+
+## 📋 Criterios de Aceptación
+- [ ] Input validation funciona correctamente
+- [ ] Processing maneja todos los casos de uso
+- [ ] Output se formatea correctamente
+- [ ] Error handling es robusto
+- [ ] UI es responsive
+- [ ] Performance es aceptable para archivos grandes
+
+## 🔍 Palabras Clave SEO
+Lista de términos que la gente buscaría:
+- "herramienta X online"  
 - "convertir Y a Z"
+- "validar A online"
 
-**Complejidad estimada**
-[Baja/Media/Alta]
+## 🎨 Mockups/Referencias
+[Enlaces a herramientas similares o mockups]
 
-**Prioridad sugerida**
-[Alta/Media/Baja] y por qué
+## 🧪 Strategy de Testing
+¿Cómo testearías esta feature?
+
+### Unit Tests
+- [ ] Validation logic
+- [ ] Processing functions
+- [ ] Error handling
+
+### E2E Tests  
+- [ ] Complete user flow
+- [ ] Edge cases
+- [ ] Mobile responsiveness
+
+## 📊 Prioridad Sugerida
+- [ ] 🔴 Alta - Feature muy demandada
+- [ ] 🟡 Media - Nice to have
+- [ ] 🟢 Baja - Futuro
+
+**Justificación**: [Por qué esta prioridad]
+
+## 🚀 Implementación
+¿Te gustaría implementar esta feature?
+- [ ] Sí, puedo implementarla
+- [ ] Sí, pero necesito ayuda con [X]
+- [ ] No, solo sugiero la idea
 ```
 
-## 🏆 Reconocimientos
+## 🏆 Contributors & Recognition
 
-### Contributors Hall of Fame
-- Mantenemos un wall of fame de contributors
-- Credits en cada herramienta implementada
-- Posible revenue sharing para contributors principales
+### Contribution Levels
+- **🥉 Bronze**: 1-3 PRs merged exitosos
+- **🥈 Silver**: 4-9 PRs merged + 1 herramienta completa
+- **🥇 Gold**: 10+ PRs + múltiples herramientas + mentoring
+- **💎 Diamond**: Core maintainer + architectural decisions
 
-### Niveles de Contribución
-- **🥉 Bronze**: 1-3 PRs merged
-- **🥈 Silver**: 4-9 PRs merged  
-- **🥇 Gold**: 10+ PRs merged
-- **💎 Diamond**: Core maintainer
+### Recognition System
+- **📝 Credits**: En cada herramienta implementada
+- **🏆 Hall of Fame**: README.md contributors section
+- **🎯 Special mentions**: En releases importantes
+- **💰 Revenue sharing**: Para contributors principales (futuro)
 
-## 📞 Contacto y Soporte
+### Quality Metrics para Recognition
+- ✅ **Test coverage** >80% en contribuciones
+- ✅ **Zero regression** policy - no romper features existentes  
+- ✅ **Documentation** completa en PRs
+- ✅ **Code review** participation activa
 
-### Channels
-- **Issues**: Para bugs y feature requests
-- **Discussions**: Para preguntas generales
-- **Email**: [Por definir]
+## 📞 Soporte y Comunicación
 
-### Response Times
-- **Bugs críticos**: <24h
-- **Feature requests**: <72h
-- **General questions**: <1 semana
+### Channels Disponibles
+- **🐛 GitHub Issues**: Bugs y feature requests
+- **💬 GitHub Discussions**: Preguntas generales y arquitectura
+- **📧 Email**: [Por definir para casos especiales]
+
+### Response Time Goals
+- **🔴 Bugs críticos**: <24 horas
+- **🟡 Feature requests**: <72 horas  
+- **🟢 General questions**: <1 semana
+- **🔵 Code reviews**: <48 horas
+
+### Quality Standards para Communication
+- **🇪🇸 Español**: Idioma principal del proyecto
+- **🎯 Specific**: Issues específicos con ejemplos
+- **📝 Documented**: Referencias a líneas de código
+- **🧪 Testable**: Casos de uso reproducibles
 
 ---
 
-¡Esperamos tus contribuciones para hacer de DevToolsKit la mejor herramienta para desarrolladores! 🚀
+## 🚨 Recordatorios Críticos
+
+### ⛔ **NUNCA hacer esto:**
+1. **Merge directo a `main`** - Está **BLOQUEADO**
+2. **Push code sin tests** - CI/CD **RECHAZARÁ** el PR
+3. **Ignorar type errors** - Build **FALLARÁ**
+4. **Skip E2E tests** para nuevas features - **OBLIGATORIO**
+5. **Commit secrets** - Revisar antes de push
+
+### ✅ **SIEMPRE hacer esto:**
+1. **Pull Request workflow** para TODA contribución  
+2. **Tests completos** (unit + E2E) antes de PR
+3. **Local verification** con todos los scripts
+4. **Documentation** actualizada si es necesario
+5. **Responsive design** verificado en mobile
+
+### 🎯 **Testing es NO-NEGOCIABLE:**
+- **Coverage >80%** requerido
+- **E2E tests** para todos los user flows
+- **CI/CD debe pasar** completamente
+- **No exceptions** - sin tests, sin merge
+
+---
+
+¡Gracias por contribuir a hacer DevToolsKit la mejor herramienta para desarrolladores! 🚀
+
+Tu contribución debe ser **tested**, **documented**, y **accessible**. Quality over speed! 💎
