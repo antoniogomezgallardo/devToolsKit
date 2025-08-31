@@ -76,6 +76,34 @@ export const PAGE_META_CONFIG: { [key: string]: MetaTagConfig } = {
     ogType: "website",
     twitterTitle: "🔧 Validador JSON Online - DevToolsKit",
     twitterDescription: "Valida y formatea JSON al instante. Gratis, rápido y sin registro. ¡Pruébalo ahora!"
+  },
+
+  "/tools/jwt-decoder": {
+    title: "JWT Decoder Online Gratis - DevToolsKit",
+    description: "🔐 Decodificador JWT online gratis. Decodifica y valida tokens JWT mostrando header, payload y signature. Sin registro requerido.",
+    keywords: "jwt decoder, decodificar jwt, jwt token, jwt validator, jwt parser, json web token, autenticacion",
+    canonical: "https://onlinedevtoolskit.com/tools/jwt-decoder",
+    ogTitle: "JWT Decoder Online - Decodifica Tokens JWT Gratis",
+    ogDescription: "Decodifica y analiza tokens JWT al instante. Muestra header, payload, signature y valida expiración.",
+    ogImage: "https://onlinedevtoolskit.com/images/jwt-decoder-og.jpg",
+    ogUrl: "https://onlinedevtoolskit.com/tools/jwt-decoder",
+    ogType: "website",
+    twitterTitle: "🔐 JWT Decoder Online - DevToolsKit",
+    twitterDescription: "Decodifica tokens JWT al instante. Gratis, seguro y sin registro. ¡Pruébalo ahora!"
+  },
+
+  "/tools/locator-generator": {
+    title: "Generador de Locators para Testing - DevToolsKit",
+    description: "🎯 Genera locators robustos para testing automatizado. Compatible con Playwright, Selenium, Cypress y más frameworks. Gratis y sin registro.",
+    keywords: "locator generator, selector generator, testing automation, playwright locators, selenium selectors, cypress selectors, qa testing, test automation",
+    canonical: "https://onlinedevtoolskit.com/tools/locator-generator",
+    ogTitle: "Generador de Locators - Testing Automation Tool",
+    ogDescription: "Genera locators robustos para Playwright, Selenium y Cypress. Analiza HTML y sugiere los mejores selectores para tus tests automatizados.",
+    ogImage: "https://onlinedevtoolskit.com/images/locator-generator-og.jpg",
+    ogUrl: "https://onlinedevtoolskit.com/tools/locator-generator",
+    ogType: "website",
+    twitterTitle: "🎯 Generador de Locators - DevToolsKit",
+    twitterDescription: "Genera locators robustos para testing automatizado. Compatible con Playwright, Selenium, Cypress. ¡Gratis!"
   }
 };
 

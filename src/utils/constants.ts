@@ -1,4 +1,4 @@
-import { Tool } from '../types';
+import type { Tool } from '../types';
 
 export const SITE_CONFIG = {
   name: 'Online DevToolsKit',
@@ -27,6 +27,16 @@ export const TOOLS: Tool[] = [
     icon: '🔐',
     path: '/tools/jwt-decoder',
     keywords: ['jwt', 'token', 'decode', 'authentication'],
+    featured: true
+  },
+  {
+    id: 'locator-generator',
+    name: 'Generador de Locators',
+    description: 'Genera locators robustos para testing automatizado (Playwright, Selenium, Cypress)',
+    category: 'utilities',
+    icon: '🎯',
+    path: '/tools/locator-generator',
+    keywords: ['locators', 'selectors', 'testing', 'automation', 'playwright', 'selenium', 'cypress'],
     featured: true
   },
   {
