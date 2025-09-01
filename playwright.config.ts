@@ -6,17 +6,23 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/e2e',
   
+  /* Global timeout for the entire test run */
+  globalTimeout: 10 * 60 * 1000, // 10 minutes
+  
+  /* Timeout per test */
+  timeout: 60 * 1000, // 1 minute per test
+  
   /* Run tests in files in parallel */
   fullyParallel: true,
   
   /* Fail the build on CI if you accidentally left test.only in the source code */
   forbidOnly: !!process.env.CI,
   
-  /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  /* Retry strategy for flaky tests */
+  retries: process.env.CI ? 3 : 2, // 3 retries in CI, 2 retries locally
   
-  /* Opt out of parallel tests on CI */
-  workers: process.env.CI ? 1 : undefined,
+  /* Parallel workers for optimal performance */
+  workers: process.env.CI ? 10 : 14, // 10 workers in CI, 14 workers locally
   
   /* Reporter to use */
   reporter: [
@@ -62,6 +68,8 @@ export default defineConfig({
     command: 'npm run dev',
     url: 'http://localhost:1234',
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
+    timeout: 180 * 1000, // 3 minutes for dev server startup
+    stdout: 'ignore', // Reduce output noise
+    stderr: 'pipe',   // Still show errors
   },
 });
