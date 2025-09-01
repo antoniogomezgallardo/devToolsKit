@@ -119,8 +119,8 @@ const validJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwI
       await headerCopyBtn.click({ force: true });
     }
     
-    // Should show success feedback
-    await expect(page.getByText('¡Copiado!')).toBeVisible({ timeout: 3000 });
+    // Should show success feedback on header button
+    await expect(page.locator('#copy-header-btn')).toContainText('¡Copiado!', { timeout: 3000 });
     
     // Wait for feedback to clear
     await page.waitForTimeout(1500);
@@ -143,8 +143,8 @@ const validJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwI
       await payloadCopyBtn.click({ force: true });
     }
     
-    // Should show success feedback again
-    await expect(page.getByText('¡Copiado!')).toBeVisible({ timeout: 3000 });
+    // Should show success feedback on payload button
+    await expect(page.locator('#copy-payload-btn')).toContainText('¡Copiado!', { timeout: 3000 });
   });
 
   test('should clear all fields', async ({ page }) => {
