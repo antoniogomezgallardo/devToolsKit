@@ -128,7 +128,7 @@ export class LocatorGenerator {
           
           <!-- Status -->
           <div id="statusContainer" class="mt-4">
-            <div id="status" class="text-gray-500">
+            <div id="status" data-testid="status-message" class="text-gray-500">
               Introduce HTML para generar locators
             </div>
           </div>
@@ -191,27 +191,27 @@ export class LocatorGenerator {
         <div class="bg-white rounded-lg border border-gray-200 p-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">📋 Ejemplos de HTML</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="form">
+            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="form" title="📋 Formulario Login form con inputs">
               <div class="font-medium text-blue-700">📋 Formulario</div>
               <div class="text-sm text-gray-600">Login form con inputs</div>
             </button>
-            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="navigation">
+            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="navigation" title="🧭 Navegación Menu con enlaces">
               <div class="font-medium text-blue-700">🧭 Navegación</div>
               <div class="text-sm text-gray-600">Menu con enlaces</div>
             </button>
-            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="table">
+            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="table" title="📊 Tabla Data table con acciones">
               <div class="font-medium text-blue-700">📊 Tabla</div>
               <div class="text-sm text-gray-600">Data table con acciones</div>
             </button>
-            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="modal">
+            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="modal" title="🔲 Modal Dialog con botones">
               <div class="font-medium text-blue-700">🔲 Modal</div>
               <div class="text-sm text-gray-600">Dialog con botones</div>
             </button>
-            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="cards">
+            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="cards" title="🎴 Cards Product cards">
               <div class="font-medium text-blue-700">🎴 Cards</div>
               <div class="text-sm text-gray-600">Product cards</div>
             </button>
-            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="complex">
+            <button class="example-btn text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors" data-example="complex" title="⚙️ Complejo App con múltiples elementos">
               <div class="font-medium text-blue-700">⚙️ Complejo</div>
               <div class="text-sm text-gray-600">App con múltiples elementos</div>
             </button>
@@ -592,12 +592,24 @@ export class LocatorGenerator {
     };
 
     const allElements = flattenElements(elements);
-    const interactiveElements = allElements.filter(elem => 
-      ['button', 'input', 'select', 'textarea', 'a'].includes(elem.tag) ||
-      elem.attributes.role ||
-      elem.id ||
-      elem.attributes['data-testid']
-    );
+    const interactiveElements = allElements.filter(elem => {
+      // Standard interactive elements
+      if (['button', 'input', 'select', 'textarea', 'a'].includes(elem.tag)) return true;
+      
+      // Elements with testing or semantic attributes
+      if (elem.attributes.role || elem.id || elem.attributes['data-testid'] || elem.attributes['data-test']) return true;
+      
+      // Elements with common interactive classes (for fragile locator testing)
+      const interactiveClassPatterns = [
+        /^btn/, /button/, /^link/, /clickable/, /^action/
+      ];
+      if (elem.classes.some(cls => interactiveClassPatterns.some(pattern => pattern.test(cls)))) return true;
+      
+      // Elements with significant text content (potential clickable elements)
+      if (elem.textContent && elem.textContent.length > 0 && elem.textContent.length < 100) return true;
+      
+      return false;
+    });
 
     elementsList.innerHTML = `
       <div class="space-y-2 max-h-64 overflow-y-auto">
@@ -692,13 +704,13 @@ export class LocatorGenerator {
             <span class="px-3 py-1 bg-${robustnessColor}-100 text-${robustnessColor}-800 text-sm font-medium rounded-full">
               ${locator.type.toUpperCase()}
             </span>
-            <div class="text-sm text-gray-600">
+            <div class="text-sm text-gray-600" data-testid="robustness-score-${index}">
               Robustez: 
               <span class="font-medium text-${robustnessColor}-600">${locator.robustnessScore}/10</span>
             </div>
             ${validation.isUnique ? 
-              '<span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">✅ Único</span>' :
-              `<span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">❌ ${validation.matchCount} matches</span>`
+              `<span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded" data-testid="unique-indicator-${index}">✅ Único</span>` :
+              `<span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded" data-testid="matches-indicator-${index}">❌ ${validation.matchCount} matches</span>`
             }
           </div>
           <div class="flex space-x-2">
@@ -720,7 +732,7 @@ export class LocatorGenerator {
 
         <div class="mb-3">
           <div class="text-sm text-gray-600 mb-1">${locator.framework.toUpperCase()} Code:</div>
-          <code id="code-${index}" class="block p-3 bg-gray-900 text-green-400 rounded text-sm font-mono break-all">${locator.codeSnippet}</code>
+          <code id="code-${index}" data-testid="code-snippet-${index}" class="block p-3 bg-gray-900 text-green-400 rounded text-sm font-mono break-all">${locator.codeSnippet}</code>
         </div>
 
         <div class="text-sm text-gray-700 mb-3">${locator.description}</div>
@@ -741,7 +753,7 @@ export class LocatorGenerator {
         </div>
 
         ${validation.recommendations.length > 0 ? `
-          <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded">
+          <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded" data-testid="recommendations-${index}">
             <div class="text-sm font-medium text-yellow-800 mb-1">💡 Recomendaciones:</div>
             <ul class="text-sm text-yellow-700 space-y-1">
               ${validation.recommendations.map(rec => `<li>• ${rec}</li>`).join('')}

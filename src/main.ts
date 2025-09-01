@@ -5,6 +5,7 @@ import { ToolCard } from './components/common/ToolCard';
 import { JSONValidator } from './tools/json-validator/JSONValidator';
 import { JWTDecoder } from './tools/jwt-decoder/JWTDecoder';
 import { LocatorGenerator } from './tools/locator-generator/LocatorGenerator';
+import { Base64EncoderDecoder } from './tools/base64-encoder-decoder/Base64EncoderDecoder';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { initializeStructuredData } from './utils/structuredData';
@@ -67,6 +68,9 @@ class App {
         break;
       case '/tools/locator-generator':
         this.renderLocatorGenerator(mainContent);
+        break;
+      case '/tools/base64':
+        this.renderBase64EncoderDecoder(mainContent);
         break;
       default:
         this.renderHomePage(mainContent);
@@ -171,6 +175,11 @@ class App {
     new LocatorGenerator(container, {
       containerId: 'locator-generator-container'
     });
+  }
+
+  private renderBase64EncoderDecoder(container: HTMLElement): void {
+    container.innerHTML = '';
+    new Base64EncoderDecoder(container);
   }
 
   private navigate(path: string): void {

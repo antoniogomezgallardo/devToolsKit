@@ -27,6 +27,12 @@ export const AnalyticsEvents = {
   JWT_DECODE_SUCCESS: 'jwt_decode_success',
   JWT_DECODE_ERROR: 'jwt_decode_error',
   
+  // Base64 Encoder/Decoder Specific
+  BASE64_ENCODED: 'base64_encoded',
+  BASE64_DECODED: 'base64_decoded',
+  BASE64_SUCCESS: 'base64_success',
+  BASE64_ERROR: 'base64_error',
+  
   // User Interactions
   COPY_RESULT: 'copy_result',
   CLEAR_INPUT: 'clear_input',
@@ -195,6 +201,66 @@ export const trackUserInteraction = {
     trackEvent(AnalyticsEvents.CLEAR_INPUT, {
       tool_name: toolName,
       action: 'clear'
+    });
+  }
+};
+
+/**
+ * Track Base64 Encoder/Decoder specific events
+ */
+export const trackBase64EncoderDecoder = {
+  encode: (inputLength: number, outputLength: number) => {
+    trackEvent(AnalyticsEvents.BASE64_ENCODED, {
+      tool_name: ToolNames.BASE64_ENCODER,
+      input_length: inputLength,
+      output_length: outputLength,
+      action: 'encode'
+    });
+  },
+  
+  decode: (inputLength: number, outputLength: number) => {
+    trackEvent(AnalyticsEvents.BASE64_DECODED, {
+      tool_name: ToolNames.BASE64_ENCODER,
+      input_length: inputLength,
+      output_length: outputLength,
+      action: 'decode'
+    });
+  },
+  
+  success: (operation: 'encode' | 'decode', inputLength: number, outputLength: number) => {
+    trackEvent(AnalyticsEvents.BASE64_SUCCESS, {
+      tool_name: ToolNames.BASE64_ENCODER,
+      operation: operation,
+      input_length: inputLength,
+      output_length: outputLength,
+      action: 'success'
+    });
+  },
+  
+  error: (operation: 'encode' | 'decode', inputLength: number, errorType: string) => {
+    trackEvent(AnalyticsEvents.BASE64_ERROR, {
+      tool_name: ToolNames.BASE64_ENCODER,
+      operation: operation,
+      input_length: inputLength,
+      error_type: errorType,
+      action: 'error'
+    });
+  },
+  
+  fileUpload: (fileSize: number, fileType: string) => {
+    trackEvent('base64_file_upload', {
+      tool_name: ToolNames.BASE64_ENCODER,
+      file_size: fileSize,
+      file_type: fileType,
+      action: 'file_upload'
+    });
+  },
+  
+  formatOutput: (outputLength: number) => {
+    trackEvent('base64_format_output', {
+      tool_name: ToolNames.BASE64_ENCODER,
+      output_length: outputLength,
+      action: 'format'
     });
   }
 };

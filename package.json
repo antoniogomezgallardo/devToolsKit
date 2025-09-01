@@ -10,7 +10,7 @@
     "url": "https://github.com/antoniogomezgallardo/devToolsKit"
   },
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "parcel index.html --port 1234 --hmr-port 1235",
     "build": "parcel build index.html --dist-dir dist --public-url ./",
     "vercel-build": "parcel build index.html --dist-dir dist --public-url ./",
     "preview": "parcel serve dist",
@@ -33,6 +33,7 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20.17.10",
+    "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "autoprefixer": "^10.4.20",
     "jsdom": "^26.1.0",
