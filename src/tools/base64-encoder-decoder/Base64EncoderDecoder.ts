@@ -38,10 +38,10 @@ export class Base64EncoderDecoder {
         <!-- Mode Toggle -->
         <div class="flex justify-center mb-6">
           <div class="bg-gray-100 rounded-lg p-1 flex">
-            <button id="encode-mode" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-primary-600 text-white">
+            <button id="encode-mode" data-testid="encode-mode-btn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-primary-600 text-white">
               Codificar
             </button>
-            <button id="decode-mode" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-gray-600 hover:text-gray-900">
+            <button id="decode-mode" data-testid="decode-mode-btn" class="px-4 py-2 rounded-md font-medium text-sm transition-colors text-gray-600 hover:text-gray-900">
               Decodificar
             </button>
           </div>
@@ -56,20 +56,20 @@ export class Base64EncoderDecoder {
               <h2 class="text-xl font-semibold text-gray-900" id="input-title">Texto a codificar</h2>
               <div class="flex space-x-2">
                 <input type="file" id="file-input" class="hidden" accept="*/*">
-                <button id="file-btn" class="px-3 py-1 text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 rounded transition-colors">
+                <button id="file-btn" data-testid="file-btn" class="px-3 py-1 text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 rounded transition-colors">
                   📁 Archivo
                 </button>
-                <button id="clear-btn" class="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors">
+                <button id="clear-btn" data-testid="clear-btn" class="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors">
                   Limpiar
                 </button>
               </div>
             </div>
             <div id="input-container"></div>
             <div class="flex space-x-3">
-              <button id="encode-btn" class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors font-medium">
+              <button id="encode-btn" data-testid="encode-action-btn" class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors font-medium">
                 🔒 Codificar
               </button>
-              <button id="decode-btn" class="flex-1 px-4 py-2 bg-secondary-600 hover:bg-secondary-700 text-white rounded-lg transition-colors font-medium hidden">
+              <button id="decode-btn" data-testid="decode-action-btn" class="flex-1 px-4 py-2 bg-secondary-600 hover:bg-secondary-700 text-white rounded-lg transition-colors font-medium hidden">
                 🔓 Decodificar
               </button>
             </div>
@@ -80,10 +80,10 @@ export class Base64EncoderDecoder {
             <div class="flex items-center justify-between">
               <h2 class="text-xl font-semibold text-gray-900" id="output-title">Base64 codificado</h2>
               <div class="flex space-x-2">
-                <button id="format-btn" class="px-3 py-1 text-sm bg-green-100 hover:bg-green-200 text-green-700 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <button id="format-btn" data-testid="format-btn" class="px-3 py-1 text-sm bg-green-100 hover:bg-green-200 text-green-700 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                   📝 Formatear
                 </button>
-                <button id="copy-btn" class="px-3 py-1 text-sm bg-primary-100 hover:bg-primary-200 text-primary-700 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <button id="copy-btn" data-testid="copy-btn" class="px-3 py-1 text-sm bg-primary-100 hover:bg-primary-200 text-primary-700 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                   Copiar
                 </button>
               </div>

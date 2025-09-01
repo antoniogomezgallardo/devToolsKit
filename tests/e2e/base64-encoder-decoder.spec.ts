@@ -12,19 +12,19 @@ test.describe('Base64 Encoder/Decoder Tool', () => {
       await expect(page.getByRole('heading', { name: 'Base64 Encoder/Decoder' })).toBeVisible();
       
       // Mode toggle buttons
-      await expect(page.getByRole('button', { name: 'Codificar' })).toBeVisible();
-      await expect(page.getByRole('button', { name: 'Decodificar' })).toBeVisible();
+      await expect(page.getByTestId('encode-mode-btn')).toBeVisible();
+      await expect(page.getByTestId('decode-mode-btn')).toBeVisible();
       
       // Input/Output areas
       await expect(page.getByText('Texto a codificar')).toBeVisible();
       await expect(page.getByText('Base64 codificado')).toBeVisible();
       
       // Action buttons
-      await expect(page.getByRole('button', { name: /Codificar/ })).toBeVisible();
-      await expect(page.getByRole('button', { name: 'Limpiar' })).toBeVisible();
-      await expect(page.getByRole('button', { name: 'Copiar' })).toBeVisible();
-      await expect(page.getByRole('button', { name: /Archivo/ })).toBeVisible();
-      await expect(page.getByRole('button', { name: /Formatear/ })).toBeVisible();
+      await expect(page.getByTestId('encode-action-btn')).toBeVisible();
+      await expect(page.getByTestId('clear-btn')).toBeVisible();
+      await expect(page.getByTestId('copy-btn')).toBeVisible();
+      await expect(page.getByTestId('file-btn')).toBeVisible();
+      await expect(page.getByTestId('format-btn')).toBeVisible();
       
       // Examples section
       await expect(page.getByText('Ejemplos de uso')).toBeVisible();
@@ -160,19 +160,43 @@ test.describe('Base64 Encoder/Decoder Tool', () => {
 
   test.describe('Interactive Features', () => {
     test('should copy output to clipboard', async ({ page }) => {
+      // Mock clipboard API for headless compatibility
+      await page.addInitScript(() => {
+        Object.defineProperty(navigator, 'clipboard', {
+          value: {
+            writeText: async (text) => {
+              window.lastCopiedText = text;
+              return Promise.resolve();
+            },
+            readText: async () => {
+              return Promise.resolve(window.lastCopiedText || '');
+            }
+          }
+        });
+      });
+      
+      // Grant clipboard permissions
+      await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+      
       await page.fill('textarea[placeholder*="codificar"]', 'Test copy');
       
       // Wait for encoding to complete
       await expect(page.getByText('✅ Texto codificado exitosamente')).toBeVisible();
       
+      // Wait for output to appear
+      await expect(page.locator('textarea[placeholder*="resultado"]')).not.toBeEmpty();
+      
+      // Wait for copy button to be enabled
+      await expect(page.getByTestId('copy-btn')).toBeEnabled();
+      
       // Click copy button
-      await page.click('button:has-text("Copiar")');
+      await page.getByTestId('copy-btn').click();
       
       // Button should show copied state temporarily
-      await expect(page.getByText('¡Copiado!')).toBeVisible();
+      await expect(page.getByTestId('copy-btn')).toContainText('¡Copiado!', { timeout: 1000 });
       
       // Should return to original state
-      await expect(page.getByText('Copiar')).toBeVisible({ timeout: 3000 });
+      await expect(page.getByTestId('copy-btn')).toContainText('Copiar', { timeout: 3000 });
     });
 
     test('should clear all content', async ({ page }) => {
