@@ -38,8 +38,15 @@ Crear un sitio web con 15-20 utilidades online para desarrolladores que funcione
 - **CI/CD mejorado**: GitHub Actions con branch protection en main
 - **Cross-browser testing**: Chrome, Firefox, Safari (Desktop & Mobile)
 
+### 🚀 Claude Code Power User (NEW!)
+- **🤖 Subagents Especializados**: tool-builder y e2e-tester para workflows automatizados
+- **📝 Custom Commands**: `/new-tool` y `/test-complete` para desarrollo eficiente
+- **📋 Plan Mode**: Exploración segura de código para implementaciones complejas
+- **🔧 Workflow Automation**: Desde crear herramientas hasta testing completo
+
 ### 📚 Documentación
 - **Documentación técnica completa**: Arquitectura, patrones y best practices  
+- **Claude Code Power User Guide**: Guía completa de 35 páginas para usuarios avanzados
 - **EXPLICACION_COMPLETA.md actualizado**: Context completo del proyecto
 - **Testing guidelines**: Estrategias y coverage requirements
 
@@ -59,6 +66,42 @@ Crear un sitio web con 15-20 utilidades online para desarrolladores que funcione
 ### 🔄 En Desarrollo (Alta Prioridad)
 - [ ] **Generador de contraseñas** 🔄 Próximo
 - [ ] **Generador de paleta de colores** 🔄 Próximo
+
+## 🚀 Claude Code Power User Features
+
+### 🎯 Desarrollo Supercharged
+DevToolsKit implementa **Claude Code Power User Phase 1** para desarrollo ultra-eficiente:
+
+#### 🤖 Subagents Especializados
+- **tool-builder**: Experto en crear herramientas DevToolsKit siguiendo todos los patrones establecidos
+- **e2e-tester**: Especialista en testing E2E completo con Playwright y cross-browser testing
+
+#### 📝 Custom Commands  
+- **`/new-tool [nombre]`**: Workflow automatizado para crear herramientas completas con testing
+- **`/test-complete`**: Ejecutar suite completa (TypeScript + Unit + E2E + Build + Coverage)
+
+#### 📋 Plan Mode
+- **Exploración segura**: Analizar código y planificar implementaciones sin modificaciones
+- **Arquitectura planning**: Diseñar features complejas antes de implementar
+
+### 🔧 Quick Start Power User
+
+```bash
+# Crear nueva herramienta con workflow completo
+/new-tool Password Generator
+
+# Ejecutar tests completos del proyecto  
+/test-complete
+
+# Usar subagent especializado
+/agents tool-builder
+> "Create a Color Palette Generator with export functionality"
+```
+
+### 📚 Documentación Completa
+- **[Power User Guide](docs/CLAUDE_CODE_POWER_USER_GUIDE.md)**: Guía completa de 35 páginas
+- **Phase 1 Implemented**: Foundation con subagents y commands esenciales
+- **Phase 2 Planning**: SEO optimizer y documentation writer agents
 
 ## 🚀 Funcionalidades Destacadas
 
