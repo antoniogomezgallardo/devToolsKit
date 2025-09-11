@@ -1,0 +1,46 @@
+{
+  "permission-mode": "plan",
+  "description": "DevToolsKit Claude Code Configuration",
+  "project": {
+    "name": "DevToolsKit",
+    "version": "0.6.0",
+    "type": "web-application",
+    "stack": ["Parcel", "TypeScript", "Tailwind CSS", "Vitest", "Playwright"]
+  },
+  "power-user-features": {
+    "agents": {
+      "enabled": true,
+      "default-agents": ["tool-builder", "e2e-tester"],
+      "auto-suggest": true
+    },
+    "commands": {
+      "enabled": true,
+      "project-commands": ["new-tool", "test-complete"],
+      "quick-access": true
+    },
+    "plan-mode": {
+      "default": true,
+      "complex-requests": true,
+      "architecture-analysis": true,
+      "safe-exploration": true
+    }
+  },
+  "development": {
+    "git-flow": true,
+    "branch-protection": true,
+    "testing-required": true,
+    "ci-cd": "github-actions"
+  },
+  "quality-standards": {
+    "lighthouse-score": ">95",
+    "test-coverage": ">80%",
+    "typescript-strict": true,
+    "responsive-design": true,
+    "accessibility": "WCAG-2.1"
+  },
+  "analytics": {
+    "google-analytics": "G-G8CSCGH4HS",
+    "core-web-vitals": true,
+    "performance-monitoring": true
+  }
+}
