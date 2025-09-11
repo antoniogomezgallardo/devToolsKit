@@ -104,6 +104,20 @@ export const PAGE_META_CONFIG: { [key: string]: MetaTagConfig } = {
     ogType: "website",
     twitterTitle: "🎯 Generador de Locators - DevToolsKit",
     twitterDescription: "Genera locators robustos para testing automatizado. Compatible con Playwright, Selenium, Cypress. ¡Gratis!"
+  },
+
+  "/tools/base64": {
+    title: "Base64 Encoder/Decoder Online Gratis - DevToolsKit",
+    description: "📝 Codifica y decodifica texto en Base64 online gratis. Soporte para archivos, formato automático y validación robusta. Sin registro requerido.",
+    keywords: "base64 encoder, base64 decoder, codificar base64, decodificar base64, base64 converter, base64 online, encoding, decoding",
+    canonical: "https://onlinedevtoolskit.com/tools/base64",
+    ogTitle: "Base64 Encoder/Decoder Online - Gratis y Sin Registro",
+    ogDescription: "Codifica y decodifica Base64 al instante. Soporte para archivos, formateo automático y validación completa.",
+    ogImage: "https://onlinedevtoolskit.com/images/base64-encoder-og.jpg",
+    ogUrl: "https://onlinedevtoolskit.com/tools/base64",
+    ogType: "website",
+    twitterTitle: "📝 Base64 Encoder/Decoder - DevToolsKit",
+    twitterDescription: "Codifica/decodifica Base64 al instante. Soporte para archivos, gratis y sin registro. ¡Pruébalo!"
   }
 };
 

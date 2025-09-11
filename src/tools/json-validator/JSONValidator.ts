@@ -1,17 +1,16 @@
 import { TextArea } from '../../components/ui/TextArea';
-import { Button } from '../../components/ui/Button';
 import { validateAndFormatJSON, getJSONInfo } from './utils';
 import { trackJSONValidator, trackUserInteraction, ToolNames } from '../../utils/analytics';
 
 export class JSONValidator {
   private container: HTMLElement;
-  private inputTextArea: HTMLTextAreaElement;
-  private outputTextArea: HTMLTextAreaElement;
-  private validateBtn: HTMLButtonElement;
-  private clearBtn: HTMLButtonElement;
-  private copyBtn: HTMLButtonElement;
-  private statusDiv: HTMLElement;
-  private infoDiv: HTMLElement;
+  private inputTextArea!: HTMLTextAreaElement;
+  private outputTextArea!: HTMLTextAreaElement;
+  private validateBtn!: HTMLButtonElement;
+  private clearBtn!: HTMLButtonElement;
+  private copyBtn!: HTMLButtonElement;
+  private statusDiv!: HTMLElement;
+  private infoDiv!: HTMLElement;
 
   constructor(container: HTMLElement) {
     this.container = container;

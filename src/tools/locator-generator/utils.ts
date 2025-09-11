@@ -19,6 +19,24 @@ export function parseHTML(htmlString: string): ParsedHTML {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
     
+    // Check for parser errors - DOMParser creates error elements for malformed HTML
+    const parserErrors = doc.querySelectorAll('parsererror');
+    if (parserErrors.length > 0) {
+      throw new Error('HTML contains syntax errors and cannot be parsed');
+    }
+    
+    // Additional validation for completely malformed HTML patterns
+    const invalidPatterns = [
+      /^[<>]+$/,  // Only angle brackets like <<<<invalid>>>>
+      /<<+/,      // Multiple consecutive opening brackets
+      />>+/,      // Multiple consecutive closing brackets
+    ];
+    
+    const trimmedHtml = htmlString.trim();
+    if (invalidPatterns.some(pattern => pattern.test(trimmedHtml))) {
+      throw new Error('HTML contains invalid syntax patterns');
+    }
+    
     const elements: ElementInfo[] = [];
     const stats = {
       totalElements: 0,
@@ -361,12 +379,21 @@ function generateFrameworkCode(type: LocatorType, value: string, framework: Test
           return `cy.get('[data-test="${value}"]')`;
         case LocatorType.ID:
           return `cy.get('#${value}')`;
+        case LocatorType.ROLE:
+          if (value.includes('[name=')) {
+            const [role, name] = value.split('[name="');
+            const cleanName = name.replace('"]', '');
+            return `cy.get('[role="${role}"]').contains('${cleanName}')`;
+          }
+          return `cy.get('[role="${value}"]')`;
         case LocatorType.TEXT:
           return `cy.contains('${value}')`;
         case LocatorType.PLACEHOLDER:
           return `cy.get('[placeholder="${value}"]')`;
         case LocatorType.CLASS:
           return `cy.get('.${value}')`;
+        case LocatorType.XPATH:
+          return `cy.xpath('${value}')`;
         default:
           return `cy.get('${value}')`;
       }
@@ -375,14 +402,40 @@ function generateFrameworkCode(type: LocatorType, value: string, framework: Test
       switch (type) {
         case LocatorType.DATA_TESTID:
           return `driver.findElement(By.cssSelector("[data-testid='${value}']"))`;
+        case LocatorType.DATA_TEST:
+          return `driver.findElement(By.cssSelector("[data-test='${value}']"))`;
         case LocatorType.ID:
           return `driver.findElement(By.id("${value}"))`;
+        case LocatorType.TEXT:
+          return `driver.findElement(By.xpath("//*[contains(text(), '${value}')]"))`;
+        case LocatorType.PLACEHOLDER:
+          return `driver.findElement(By.cssSelector("[placeholder='${value}']"))`;
         case LocatorType.CLASS:
           return `driver.findElement(By.className("${value}"))`;
         case LocatorType.XPATH:
           return `driver.findElement(By.xpath("${value}"))`;
         default:
           return `driver.findElement(By.cssSelector("${value}"))`;
+      }
+    
+    case TestFramework.SELENIUM_PYTHON:
+      switch (type) {
+        case LocatorType.DATA_TESTID:
+          return `driver.find_element(By.CSS_SELECTOR, "[data-testid='${value}']")`;
+        case LocatorType.DATA_TEST:
+          return `driver.find_element(By.CSS_SELECTOR, "[data-test='${value}']")`;
+        case LocatorType.ID:
+          return `driver.find_element(By.ID, "${value}")`;
+        case LocatorType.TEXT:
+          return `driver.find_element(By.XPATH, "//*[contains(text(), '${value}')]")`;
+        case LocatorType.PLACEHOLDER:
+          return `driver.find_element(By.CSS_SELECTOR, "[placeholder='${value}']")`;
+        case LocatorType.CLASS:
+          return `driver.find_element(By.CLASS_NAME, "${value}")`;
+        case LocatorType.XPATH:
+          return `driver.find_element(By.XPATH, "${value}")`;
+        default:
+          return `driver.find_element(By.CSS_SELECTOR, "${value}")`;
       }
     
     default:
