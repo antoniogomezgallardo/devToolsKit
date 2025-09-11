@@ -10,12 +10,12 @@
   "power-user-features": {
     "agents": {
       "enabled": true,
-      "default-agents": ["tool-builder", "e2e-tester"],
+      "default-agents": ["tool-builder", "e2e-tester", "seo-optimizer", "docs-writer"],
       "auto-suggest": true
     },
     "commands": {
       "enabled": true,
-      "project-commands": ["new-tool", "test-complete"],
+      "project-commands": ["new-tool", "test-complete", "release-prep", "update-analytics"],
       "quick-access": true
     },
     "plan-mode": {
@@ -23,6 +23,12 @@
       "complex-requests": true,
       "architecture-analysis": true,
       "safe-exploration": true
+    },
+    "phase-2-features": {
+      "seo-optimization": true,
+      "documentation-automation": true,
+      "release-automation": true,
+      "analytics-management": true
     }
   },
   "development": {
