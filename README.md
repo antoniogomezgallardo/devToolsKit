@@ -26,10 +26,10 @@ Creating a website with 15-20 online utilities for developers that work complete
 - **Performance**: Core Web Vitals monitoring (LCP, FID, CLS, FCP, TTFB)
 - **Monetization**: Google AdSense (ready to apply)
 - **PWA**: Manifest.json configured, service worker (future)
-- **Version**: 0.6.0
+- **Version**: 0.7.0
 - **🤖 Claude Code**: Phase 3 Power User Complete with MCP integrations
 
-## 🎉 What's New in v0.6.0 - Phase 3 Complete
+## 🎉 What's New in v0.7.0 - Phase 3 Complete
 
 ### 🤖 **Claude Code Power User Phase 3 - COMPLETE!**
 - **🔌 MCP Integrations**: Vercel, GitHub, and Lighthouse CI for complete automation
@@ -124,7 +124,7 @@ DevToolsKit implements **Industry-Leading Claude Code Power User Phase 3** for u
 
 ## 📊 Performance Excellence
 
-### **Current Performance Metrics (v0.6.0)**
+### **Current Performance Metrics (v0.7.0)**
 - **✅ Lighthouse Score**: 97/100 (Desktop) | 94/100 (Mobile)  
 - **✅ Core Web Vitals**: All in green range (top 5% of web)
   - LCP: 1.6s (target: <2.5s) ✅
