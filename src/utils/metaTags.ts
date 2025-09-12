@@ -118,6 +118,20 @@ export const PAGE_META_CONFIG: { [key: string]: MetaTagConfig } = {
     ogType: "website",
     twitterTitle: "📝 Base64 Encoder/Decoder - DevToolsKit",
     twitterDescription: "Codifica/decodifica Base64 al instante. Soporte para archivos, gratis y sin registro. ¡Pruébalo!"
+  },
+
+  "/tools/password-generator": {
+    title: "Generador de Contraseñas Seguras Online Gratis - DevToolsKit",
+    description: "🔒 Genera contraseñas seguras y personalizables online. Indicadores de fortaleza, generación por lotes y 100% privado. Sin registro requerido.",
+    keywords: "generador contraseñas, password generator, contraseñas seguras, generar password, secure passwords, random password, password strength, cybersecurity",
+    canonical: "https://onlinedevtoolskit.com/tools/password-generator",
+    ogTitle: "Generador de Contraseñas Seguras - Online y Gratis",
+    ogDescription: "Genera contraseñas ultra seguras al instante. Personalizable, con análisis de fortaleza y generación por lotes. 100% privado y local.",
+    ogImage: "https://onlinedevtoolskit.com/images/password-generator-og.jpg",
+    ogUrl: "https://onlinedevtoolskit.com/tools/password-generator",
+    ogType: "website",
+    twitterTitle: "🔒 Generador de Contraseñas Seguras - DevToolsKit",
+    twitterDescription: "Genera contraseñas ultra seguras al instante. Personalizable, privado y gratis. ¡Protege tus cuentas!"
   }
 };
 
