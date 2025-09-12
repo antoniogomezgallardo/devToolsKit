@@ -39,6 +39,12 @@ export const AnalyticsEvents = {
   PASSWORD_GENERATION_ERROR: 'password_generation_error',
   PASSWORD_BATCH_GENERATED: 'password_batch_generated',
   
+  // Color Palette Generator Specific
+  COLOR_PALETTE_GENERATED: 'color_palette_generated',
+  COLOR_PALETTE_EXPORTED: 'color_palette_exported',
+  COLOR_PALETTE_SUCCESS: 'color_palette_success',
+  COLOR_PALETTE_ERROR: 'color_palette_error',
+  
   // User Interactions
   COPY_RESULT: 'copy_result',
   CLEAR_INPUT: 'clear_input',
@@ -336,6 +342,65 @@ export const trackPasswordGenerator = {
       batch_count: count,
       error_type: errorType,
       action: 'batch_error'
+    });
+  }
+};
+
+/**
+ * Track Color Palette Generator specific events
+ */
+export const trackColorPaletteGenerator = {
+  generate: (harmony: string, colorsCount: number, baseColor: string) => {
+    trackEvent(AnalyticsEvents.COLOR_PALETTE_GENERATED, {
+      tool_name: ToolNames.COLOR_PALETTE,
+      harmony: harmony,
+      colors_count: colorsCount,
+      base_color: baseColor,
+      action: 'generate'
+    });
+  },
+  
+  export: (format: string, colorsCount: number) => {
+    trackEvent(AnalyticsEvents.COLOR_PALETTE_EXPORTED, {
+      tool_name: ToolNames.COLOR_PALETTE,
+      export_format: format,
+      colors_count: colorsCount,
+      action: 'export'
+    });
+  },
+  
+  success: (action: 'generate' | 'export', harmony: string, colorsCount: number) => {
+    trackEvent(AnalyticsEvents.COLOR_PALETTE_SUCCESS, {
+      tool_name: ToolNames.COLOR_PALETTE,
+      action: action,
+      harmony: harmony,
+      colors_count: colorsCount,
+      operation_type: action
+    });
+  },
+  
+  error: (action: 'generate' | 'export', errorType: string, harmony?: string) => {
+    trackEvent(AnalyticsEvents.COLOR_PALETTE_ERROR, {
+      tool_name: ToolNames.COLOR_PALETTE,
+      action: action,
+      error_type: errorType,
+      harmony: harmony || 'unknown',
+      operation_type: action
+    });
+  },
+  
+  randomGeneration: () => {
+    trackEvent('color_palette_random_generate', {
+      tool_name: ToolNames.COLOR_PALETTE,
+      action: 'random_generate'
+    });
+  },
+  
+  colorBlindnessSimulation: (type: string) => {
+    trackEvent('color_palette_accessibility_simulation', {
+      tool_name: ToolNames.COLOR_PALETTE,
+      simulation_type: type,
+      action: 'accessibility_check'
     });
   }
 };

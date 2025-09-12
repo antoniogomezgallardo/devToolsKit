@@ -7,6 +7,7 @@ import { JWTDecoder } from './tools/jwt-decoder/JWTDecoder';
 import { LocatorGenerator } from './tools/locator-generator/LocatorGenerator';
 import { Base64EncoderDecoder } from './tools/base64-encoder-decoder/Base64EncoderDecoder';
 import { PasswordGenerator } from './tools/password-generator/PasswordGenerator';
+import { ColorPaletteGenerator } from './tools/color-palette-generator/ColorPaletteGenerator';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { initializeStructuredData } from './utils/structuredData';
@@ -75,6 +76,9 @@ class App {
         break;
       case '/tools/password-generator':
         this.renderPasswordGenerator(mainContent);
+        break;
+      case '/tools/color-palette':
+        this.renderColorPaletteGenerator(mainContent);
         break;
       default:
         this.renderHomePage(mainContent);
@@ -189,6 +193,11 @@ class App {
   private renderPasswordGenerator(container: HTMLElement): void {
     container.innerHTML = '';
     new PasswordGenerator(container);
+  }
+
+  private renderColorPaletteGenerator(container: HTMLElement): void {
+    container.innerHTML = '';
+    new ColorPaletteGenerator(container);
   }
 
   private navigate(path: string): void {

@@ -132,6 +132,20 @@ export const PAGE_META_CONFIG: { [key: string]: MetaTagConfig } = {
     ogType: "website",
     twitterTitle: "🔒 Generador de Contraseñas Seguras - DevToolsKit",
     twitterDescription: "Genera contraseñas ultra seguras al instante. Personalizable, privado y gratis. ¡Protege tus cuentas!"
+  },
+
+  "/tools/color-palette": {
+    title: "Generador de Paleta de Colores Online - DevToolsKit",
+    description: "🎨 Genera paletas de colores armoniosas con teoría del color. Esquemas complementarios, triádicos, análogos y más. Exportación profesional gratis.",
+    keywords: "color palette generator, generador paleta colores, teoria del color, complementario, triadico, analogico, hex colors, rgb colors, design colors, ui colors",
+    canonical: "https://onlinedevtoolskit.com/tools/color-palette",
+    ogTitle: "Generador de Paleta de Colores - Teoría del Color Online",
+    ogDescription: "Crea paletas armoniosas usando teoría del color. Generación automática, simulación de daltonismo, verificación de accesibilidad y exportación profesional.",
+    ogImage: "https://onlinedevtoolskit.com/images/color-palette-generator-og.jpg",
+    ogUrl: "https://onlinedevtoolskit.com/tools/color-palette",
+    ogType: "website",
+    twitterTitle: "🎨 Generador de Paletas de Color - DevToolsKit",
+    twitterDescription: "Genera paletas armoniosas con teoría del color. Exportación CSS, SCSS, JSON, Tailwind. ¡Gratis!"
   }
 };
 
