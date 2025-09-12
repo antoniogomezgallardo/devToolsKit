@@ -1,0 +1,155 @@
+{
+  "name": "DevToolsKit MCP Configuration",
+  "description": "Model Context Protocol configuration for DevToolsKit project automation and external integrations",
+  "version": "0.6.0",
+  "servers": [
+    {
+      "name": "vercel",
+      "description": "Vercel deployment and performance monitoring integration",
+      "command": "npx",
+      "args": ["vercel-mcp-server"],
+      "env": {},
+      "capabilities": {
+        "deployment": true,
+        "performance_monitoring": true,
+        "environment_management": true,
+        "domain_management": true
+      },
+      "use_cases": [
+        "Deploy staging environments",
+        "Monitor deployment status", 
+        "Manage environment variables",
+        "Check Core Web Vitals performance",
+        "Monitor production metrics"
+      ]
+    },
+    {
+      "name": "github",
+      "description": "GitHub repository management, issues, and pull requests automation",
+      "command": "npx", 
+      "args": ["github-mcp-server"],
+      "env": {},
+      "capabilities": {
+        "repository_management": true,
+        "issue_tracking": true,
+        "pull_request_automation": true,
+        "release_management": true,
+        "branch_management": true
+      },
+      "use_cases": [
+        "Create and manage issues",
+        "Review and merge pull requests", 
+        "Manage releases and tags",
+        "Monitor repository activity",
+        "Automate GitFlow workflows"
+      ]
+    },
+    {
+      "name": "lighthouse-ci",
+      "description": "Automated performance testing and Core Web Vitals monitoring",
+      "command": "npx",
+      "args": ["lighthouse-ci-mcp-server"],
+      "env": {},
+      "capabilities": {
+        "performance_testing": true,
+        "core_web_vitals_monitoring": true,
+        "lighthouse_auditing": true,
+        "regression_detection": true
+      },
+      "use_cases": [
+        "Run automated Lighthouse audits",
+        "Monitor Core Web Vitals trends",
+        "Detect performance regressions",
+        "Generate performance reports",
+        "Set performance budgets and alerts"
+      ]
+    }
+  ],
+  "workflows": {
+    "complete_deployment_pipeline": {
+      "description": "End-to-end deployment with quality assurance",
+      "steps": [
+        {
+          "name": "run_tests",
+          "server": "local",
+          "command": "/test-complete"
+        },
+        {
+          "name": "performance_audit", 
+          "server": "lighthouse-ci",
+          "action": "audit_performance"
+        },
+        {
+          "name": "deploy_staging",
+          "server": "vercel",
+          "action": "deploy_preview"
+        },
+        {
+          "name": "create_release_pr",
+          "server": "github", 
+          "action": "create_pull_request"
+        }
+      ]
+    },
+    "performance_monitoring_pipeline": {
+      "description": "Continuous performance monitoring and optimization",
+      "steps": [
+        {
+          "name": "lighthouse_audit",
+          "server": "lighthouse-ci",
+          "action": "run_audit"
+        },
+        {
+          "name": "check_web_vitals",
+          "server": "vercel",
+          "action": "get_analytics_data"
+        },
+        {
+          "name": "performance_report",
+          "server": "github",
+          "action": "create_issue_if_regression"
+        }
+      ]
+    },
+    "emergency_hotfix_pipeline": {
+      "description": "Rapid hotfix deployment with automated testing",
+      "steps": [
+        {
+          "name": "create_hotfix_branch",
+          "server": "github",
+          "action": "create_branch"
+        },
+        {
+          "name": "run_critical_tests",
+          "server": "local", 
+          "command": "/test-complete"
+        },
+        {
+          "name": "deploy_hotfix",
+          "server": "vercel",
+          "action": "deploy_production"
+        },
+        {
+          "name": "create_hotfix_release",
+          "server": "github",
+          "action": "create_release"
+        }
+      ]
+    }
+  },
+  "settings": {
+    "auto_connect": ["vercel", "github"],
+    "retry_attempts": 3,
+    "timeout_ms": 30000,
+    "enable_logging": true,
+    "security": {
+      "require_authentication": true,
+      "allowed_origins": ["https://onlinedevtoolskit.com"],
+      "api_rate_limits": {
+        "vercel": "100/hour",
+        "github": "500/hour", 
+        "lighthouse-ci": "50/hour"
+      }
+    }
+  }
+}
