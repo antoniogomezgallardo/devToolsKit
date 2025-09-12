@@ -1,7 +1,7 @@
 {
   "name": "devtoolskit",
   "private": true,
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "description": "🛠️ Portal de herramientas online para desarrolladores - Rápido, minimalista y sin registro",
   "homepage": "https://onlinedevtoolskit.com",
