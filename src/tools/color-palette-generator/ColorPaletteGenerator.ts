@@ -501,7 +501,7 @@ export class ColorPaletteGenerator {
           <div class="aspect-square rounded-lg shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" 
                style="background-color: ${displayColor.hex};" 
                data-color-index="${index}">
-            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity"></div>
+            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity pointer-events-none"></div>
           </div>
           <div class="mt-2 text-center">
             <div class="text-sm font-medium text-gray-900">${displayColor.hex.toUpperCase()}</div>

@@ -51,6 +51,9 @@ export default defineConfig({
     /* Slower actions for better debugging */
     actionTimeout: 15000,
     navigationTimeout: 60000,
+    
+    /* Enable clipboard permissions for copy functionality tests */
+    permissions: ['clipboard-read', 'clipboard-write'],
   },
 
   /* Configure projects for major browsers */

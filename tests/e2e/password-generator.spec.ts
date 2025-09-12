@@ -13,11 +13,11 @@ test.describe('Password Generator Tool', () => {
 
   test.describe('Page Loading and UI', () => {
     test('should load password generator page correctly', async ({ page }) => {
-      await expect(page.locator('h1')).toContainText('Generador de Contraseñas');
-      await expect(page.locator('h1')).toContainText('🔒');
+      await expect(page.locator('main h1')).toContainText('Generador de Contraseñas');
+      await expect(page.locator('main h1')).toContainText('🔒');
       
-      // Check main description
-      await expect(page.locator('p')).toContainText('Genera contraseñas seguras y personalizables');
+      // Check main description - use first() to target the main description paragraph
+      await expect(page.locator('p').first()).toContainText('Genera contraseñas seguras y personalizables');
       
       // Check all main sections are visible
       await expect(page.locator('text=Longitud de Contraseña')).toBeVisible();
@@ -57,7 +57,7 @@ test.describe('Password Generator Tool', () => {
     test('should be responsive on mobile devices', async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 667 });
       
-      await expect(page.locator('h1')).toBeVisible();
+      await expect(page.locator('main h1')).toBeVisible();
       await expect(page.locator('#generate-btn')).toBeVisible();
       await expect(page.locator('#length-slider')).toBeVisible();
       
