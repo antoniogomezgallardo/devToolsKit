@@ -33,6 +33,12 @@ export const AnalyticsEvents = {
   BASE64_SUCCESS: 'base64_success',
   BASE64_ERROR: 'base64_error',
   
+  // Password Generator Specific
+  PASSWORD_GENERATED: 'password_generated',
+  PASSWORD_GENERATION_SUCCESS: 'password_generation_success',
+  PASSWORD_GENERATION_ERROR: 'password_generation_error',
+  PASSWORD_BATCH_GENERATED: 'password_batch_generated',
+  
   // User Interactions
   COPY_RESULT: 'copy_result',
   CLEAR_INPUT: 'clear_input',
@@ -261,6 +267,75 @@ export const trackBase64EncoderDecoder = {
       tool_name: ToolNames.BASE64_ENCODER,
       output_length: outputLength,
       action: 'format'
+    });
+  }
+};
+
+/**
+ * Track Password Generator specific events
+ */
+export const trackPasswordGenerator = {
+  generate: (length: number, options: any) => {
+    trackEvent(AnalyticsEvents.PASSWORD_GENERATED, {
+      tool_name: ToolNames.PASSWORD_GENERATOR,
+      password_length: length,
+      include_uppercase: options.includeUppercase,
+      include_lowercase: options.includeLowercase,
+      include_numbers: options.includeNumbers,
+      include_symbols: options.includeSymbols,
+      exclude_similar: options.excludeSimilar,
+      exclude_ambiguous: options.excludeAmbiguous,
+      action: 'generate'
+    });
+  },
+  
+  success: (length: number, strengthScore: number, entropy: number) => {
+    trackEvent(AnalyticsEvents.PASSWORD_GENERATION_SUCCESS, {
+      tool_name: ToolNames.PASSWORD_GENERATOR,
+      password_length: length,
+      strength_score: strengthScore,
+      entropy_bits: Math.round(entropy),
+      action: 'success'
+    });
+  },
+  
+  error: (length: number, errorType: string) => {
+    trackEvent(AnalyticsEvents.PASSWORD_GENERATION_ERROR, {
+      tool_name: ToolNames.PASSWORD_GENERATOR,
+      password_length: length,
+      error_type: errorType,
+      action: 'error'
+    });
+  },
+
+  generateBatch: (count: number, options: any) => {
+    trackEvent(AnalyticsEvents.PASSWORD_BATCH_GENERATED, {
+      tool_name: ToolNames.PASSWORD_GENERATOR,
+      batch_count: count,
+      password_length: options.length,
+      include_uppercase: options.includeUppercase,
+      include_lowercase: options.includeLowercase,
+      include_numbers: options.includeNumbers,
+      include_symbols: options.includeSymbols,
+      action: 'batch_generate'
+    });
+  },
+
+  batchSuccess: (requested: number, generated: number) => {
+    trackEvent('password_batch_success', {
+      tool_name: ToolNames.PASSWORD_GENERATOR,
+      requested_count: requested,
+      generated_count: generated,
+      action: 'batch_success'
+    });
+  },
+
+  batchError: (count: number, errorType: string) => {
+    trackEvent('password_batch_error', {
+      tool_name: ToolNames.PASSWORD_GENERATOR,
+      batch_count: count,
+      error_type: errorType,
+      action: 'batch_error'
     });
   }
 };
