@@ -44,6 +44,15 @@ export const AnalyticsEvents = {
   COLOR_PALETTE_EXPORTED: 'color_palette_exported',
   COLOR_PALETTE_SUCCESS: 'color_palette_success',
   COLOR_PALETTE_ERROR: 'color_palette_error',
+
+  // Hash Generator Specific
+  HASH_GENERATED: 'hash_generated',
+  HASH_GENERATION_SUCCESS: 'hash_generation_success',
+  HASH_GENERATION_ERROR: 'hash_generation_error',
+  FILE_HASH_GENERATED: 'file_hash_generated',
+  BATCH_HASH_GENERATED: 'batch_hash_generated',
+  HASH_COMPARED: 'hash_compared',
+  HASH_BATCH_EXPORTED: 'hash_batch_exported',
   
   // User Interactions
   COPY_RESULT: 'copy_result',
@@ -66,7 +75,8 @@ export const ToolNames = {
   JWT_DECODER: 'jwt_decoder',
   BASE64_ENCODER: 'base64_encoder',
   PASSWORD_GENERATOR: 'password_generator',
-  COLOR_PALETTE: 'color_palette'
+  COLOR_PALETTE: 'color_palette',
+  HASH_GENERATOR: 'hash_generator'
 } as const;
 
 /**
@@ -401,6 +411,98 @@ export const trackColorPaletteGenerator = {
       tool_name: ToolNames.COLOR_PALETTE,
       simulation_type: type,
       action: 'accessibility_check'
+    });
+  }
+};
+
+/**
+ * Track Hash Generator specific events
+ */
+export const trackHashGenerator = {
+  generate: (algorithm: string, format: string, inputLength: number, processingTime?: number) => {
+    trackEvent(AnalyticsEvents.HASH_GENERATED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      algorithm: algorithm,
+      format: format,
+      input_length: inputLength,
+      processing_time: processingTime,
+      action: 'generate'
+    });
+  },
+
+  fileHash: (algorithm: string, fileSize: number, processingTime?: number) => {
+    trackEvent(AnalyticsEvents.FILE_HASH_GENERATED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      algorithm: algorithm,
+      file_size: fileSize,
+      processing_time: processingTime,
+      action: 'file_hash'
+    });
+  },
+
+  batchHash: (algorithm: string, batchSize: number, totalTime?: number) => {
+    trackEvent(AnalyticsEvents.BATCH_HASH_GENERATED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      algorithm: algorithm,
+      batch_size: batchSize,
+      total_time: totalTime,
+      action: 'batch_hash'
+    });
+  },
+
+  compare: (algorithm: string, match: boolean, similarity?: number) => {
+    trackEvent(AnalyticsEvents.HASH_COMPARED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      algorithm: algorithm,
+      match: match,
+      similarity: similarity,
+      action: 'compare'
+    });
+  },
+
+  export: (format: string, count: number) => {
+    trackEvent(AnalyticsEvents.HASH_BATCH_EXPORTED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      export_format: format,
+      count: count,
+      action: 'export'
+    });
+  },
+
+  success: (action: 'generate' | 'file_hash' | 'batch_hash' | 'compare' | 'export', algorithm: string) => {
+    trackEvent(AnalyticsEvents.HASH_GENERATION_SUCCESS, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      action: action,
+      algorithm: algorithm,
+      operation_type: action
+    });
+  },
+
+  error: (action: 'generate' | 'file_hash' | 'batch_hash' | 'compare' | 'export', errorType: string, algorithm?: string) => {
+    trackEvent(AnalyticsEvents.HASH_GENERATION_ERROR, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      action: action,
+      error_type: errorType,
+      algorithm: algorithm || 'unknown',
+      operation_type: action
+    });
+  },
+
+  algorithmChange: (oldAlgorithm: string, newAlgorithm: string) => {
+    trackEvent('hash_algorithm_changed', {
+      tool_name: ToolNames.HASH_GENERATOR,
+      old_algorithm: oldAlgorithm,
+      new_algorithm: newAlgorithm,
+      action: 'algorithm_change'
+    });
+  },
+
+  formatChange: (oldFormat: string, newFormat: string) => {
+    trackEvent('hash_format_changed', {
+      tool_name: ToolNames.HASH_GENERATOR,
+      old_format: oldFormat,
+      new_format: newFormat,
+      action: 'format_change'
     });
   }
 };

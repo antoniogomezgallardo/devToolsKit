@@ -1,4 +1,4 @@
-import type { Tool, ToolCategory, ToolCategoryId } from '../types';
+import type { Tool, ToolCategory } from '../types';
 
 export const SITE_CONFIG = {
   name: 'Online DevToolsKit',
@@ -131,6 +131,16 @@ export const TOOLS: Tool[] = [
     icon: '🎨',
     path: '/tools/color-palette',
     keywords: ['colors', 'palette', 'hex', 'rgb', 'design'],
+    featured: true
+  },
+  {
+    id: 'hash-generator',
+    name: 'Generador de Hash',
+    description: 'Genera hashes seguros con múltiples algoritmos (MD5, SHA-1, SHA-256, SHA-512, CRC-32)',
+    category: 'encoders',
+    icon: '🔐',
+    path: '/tools/hash-generator',
+    keywords: ['hash', 'md5', 'sha256', 'sha512', 'crc32', 'checksum', 'digest'],
     featured: true
   }
 ];
