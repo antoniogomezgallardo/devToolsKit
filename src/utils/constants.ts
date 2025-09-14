@@ -136,12 +136,13 @@ export const TOOLS: Tool[] = [
   {
     id: 'hash-generator',
     name: 'Generador de Hash',
-    description: 'Genera hashes seguros con múltiples algoritmos (MD5, SHA-1, SHA-256, SHA-512, CRC-32)',
+    description: 'Genera hash seguros MD5, SHA1, SHA256, SHA512 y CRC32 para texto y archivos',
     category: 'encoders',
     icon: '🔐',
     path: '/tools/hash-generator',
-    keywords: ['hash', 'md5', 'sha256', 'sha512', 'crc32', 'checksum', 'digest'],
-    featured: true
+    keywords: ['hash', 'md5', 'sha256', 'sha512', 'crc32', 'checksum', 'crypto'],
+    featured: true,
+    wave: 1
   }
 ];
 
