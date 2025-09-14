@@ -1,4 +1,4 @@
-import type { Tool } from '../types';
+import type { Tool, ToolCategory, ToolCategoryId } from '../types';
 
 export const SITE_CONFIG = {
   name: 'Online DevToolsKit',
@@ -7,6 +7,70 @@ export const SITE_CONFIG = {
   author: 'Online DevToolsKit Team',
   keywords: ['herramientas desarrolladores', 'tools online', 'json validator', 'base64', 'jwt decoder', 'devtools', 'utilities']
 };
+
+// Phase 5: Enhanced Tool Categories (6 categories for 30+ tools)
+export const TOOL_CATEGORIES: ToolCategory[] = [
+  {
+    id: 'converters',
+    name: 'Convertidores',
+    description: 'Transforma datos entre diferentes formatos',
+    icon: '🔄',
+    color: 'blue',
+    featured: true,
+    order: 1,
+    targetTools: 8
+  },
+  {
+    id: 'validators',
+    name: 'Validadores',
+    description: 'Valida sintaxis y estructura de código',
+    icon: '✅',
+    color: 'green',
+    featured: true,
+    order: 2,
+    targetTools: 4
+  },
+  {
+    id: 'generators',
+    name: 'Generadores',
+    description: 'Crea datos y contenido automáticamente',
+    icon: '🎲',
+    color: 'purple',
+    featured: true,
+    order: 3,
+    targetTools: 7
+  },
+  {
+    id: 'encoders',
+    name: 'Codificadores',
+    description: 'Codifica y decodifica diferentes formatos',
+    icon: '🔐',
+    color: 'orange',
+    featured: true,
+    order: 4,
+    targetTools: 5
+  },
+  {
+    id: 'formatters',
+    name: 'Formateadores',
+    description: 'Embellece y minimiza código',
+    icon: '✨',
+    color: 'pink',
+    featured: true,
+    order: 5,
+    targetTools: 4
+  },
+  {
+    id: 'productivity',
+    name: 'Productividad',
+    description: 'Herramientas para flujo de desarrollo',
+    icon: '⚡',
+    color: 'indigo',
+    featured: true,
+    order: 6,
+    targetTools: 5
+  }
+];
 
 export const TOOLS: Tool[] = [
   {
@@ -33,7 +97,7 @@ export const TOOLS: Tool[] = [
     id: 'locator-generator',
     name: 'Generador de Locators',
     description: 'Genera locators robustos para testing automatizado (Playwright, Selenium, Cypress)',
-    category: 'utilities',
+    category: 'productivity',
     icon: '🎯',
     path: '/tools/locator-generator',
     keywords: ['locators', 'selectors', 'testing', 'automation', 'playwright', 'selenium', 'cypress'],
@@ -71,11 +135,48 @@ export const TOOLS: Tool[] = [
   }
 ];
 
+// Legacy category mapping (maintain compatibility)
 export const CATEGORIES = {
   converters: 'Convertidores',
-  validators: 'Validadores', 
+  validators: 'Validadores',
   generators: 'Generadores',
   formatters: 'Formateadores',
   encoders: 'Codificadores',
-  utilities: 'Utilidades'
+  productivity: 'Productividad',
+  utilities: 'Utilidades' // Legacy - mapped to productivity
+};
+
+// Phase 5: Tool Registry Helper Functions
+export const getToolsByCategory = (categoryId: string): Tool[] => {
+  return TOOLS.filter(tool => tool.category === categoryId);
+};
+
+export const getCategoryInfo = (categoryId: string): ToolCategory | undefined => {
+  return TOOL_CATEGORIES.find(category => category.id === categoryId);
+};
+
+export const getFeaturedTools = (): Tool[] => {
+  return TOOLS.filter(tool => tool.featured);
+};
+
+export const getToolById = (toolId: string): Tool | undefined => {
+  return TOOLS.find(tool => tool.id === toolId);
+};
+
+// Search configuration for Phase 5
+export const SEARCH_CONFIG = {
+  maxResults: 20,
+  threshold: 0.3,
+  keys: ['name', 'description', 'keywords'],
+  includeScore: true,
+  shouldSort: true
+};
+
+// Performance budgets for Phase 5 scaling
+export const PERFORMANCE_BUDGETS = {
+  initialBundle: 150 * 1024, // 150KB
+  toolBundle: 100 * 1024,    // 100KB per tool
+  totalBudget: 500 * 1024,   // 500KB total
+  imageOptimization: true,
+  lazyLoading: true
 };
