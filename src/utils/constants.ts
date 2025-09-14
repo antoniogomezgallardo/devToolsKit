@@ -68,6 +68,16 @@ export const TOOLS: Tool[] = [
     path: '/tools/color-palette',
     keywords: ['colors', 'palette', 'hex', 'rgb', 'design'],
     featured: true
+  },
+  {
+    id: 'uuid-generator',
+    name: 'Generador de UUID',
+    description: 'Genera identificadores únicos universales (UUID) v1, v3, v4, v5 con validación y múltiples formatos',
+    category: 'generators',
+    icon: '🔑',
+    path: '/tools/uuid-generator',
+    keywords: ['uuid', 'guid', 'identifier', 'unique', 'generator', 'random', 'timestamp', 'namespace'],
+    featured: true
   }
 ];
 
