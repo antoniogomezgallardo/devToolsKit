@@ -8,6 +8,8 @@ import { LocatorGenerator } from './tools/locator-generator/LocatorGenerator';
 import { Base64EncoderDecoder } from './tools/base64-encoder-decoder/Base64EncoderDecoder';
 import { PasswordGenerator } from './tools/password-generator/PasswordGenerator';
 import { ColorPaletteGenerator } from './tools/color-palette-generator/ColorPaletteGenerator';
+import { HashGenerator } from './tools/encoders/hash-generator/HashGenerator';
+import { UUIDGenerator } from './tools/generators/uuid-generator/UUIDGenerator';
 import { TOOLS, SITE_CONFIG } from './utils/constants';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { initializeStructuredData } from './utils/structuredData';
@@ -79,6 +81,12 @@ class App {
         break;
       case '/tools/color-palette':
         this.renderColorPaletteGenerator(mainContent);
+        break;
+      case '/tools/hash-generator':
+        this.renderHashGenerator(mainContent);
+        break;
+      case '/tools/uuid-generator':
+        this.renderUUIDGenerator(mainContent);
         break;
       default:
         this.renderHomePage(mainContent);
@@ -198,6 +206,16 @@ class App {
   private renderColorPaletteGenerator(container: HTMLElement): void {
     container.innerHTML = '';
     new ColorPaletteGenerator(container);
+  }
+
+  private renderHashGenerator(container: HTMLElement): void {
+    container.innerHTML = '';
+    new HashGenerator(container);
+  }
+
+  private renderUUIDGenerator(container: HTMLElement): void {
+    container.innerHTML = '';
+    new UUIDGenerator(container);
   }
 
   private navigate(path: string): void {

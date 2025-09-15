@@ -44,6 +44,31 @@ export const AnalyticsEvents = {
   COLOR_PALETTE_EXPORTED: 'color_palette_exported',
   COLOR_PALETTE_SUCCESS: 'color_palette_success',
   COLOR_PALETTE_ERROR: 'color_palette_error',
+
+  // Hash Generator Specific
+  HASH_GENERATED: 'hash_generated',
+  HASH_GENERATION_SUCCESS: 'hash_generation_success',
+  HASH_GENERATION_ERROR: 'hash_generation_error',
+  FILE_HASH_GENERATED: 'file_hash_generated',
+  BATCH_HASH_GENERATED: 'batch_hash_generated',
+  HASH_COMPARED: 'hash_compared',
+  HASH_BATCH_EXPORTED: 'hash_batch_exported',
+
+  // UUID Generator Specific
+  UUID_GENERATED: 'uuid_generated',
+  UUID_BATCH_GENERATED: 'uuid_batch_generated',
+  UUID_VALIDATED: 'uuid_validated',
+  UUID_VERSION_DETECTED: 'uuid_version_detected',
+  UUID_FORMAT_CHANGED: 'uuid_format_changed',
+  UUID_EXPORTED: 'uuid_exported',
+  UUID_GENERATION_ERROR: 'uuid_generation_error',
+  UUID_VALIDATION_ERROR: 'uuid_validation_error',
+  UUID_REALTIME_STARTED: 'uuid_realtime_started',
+  UUID_REALTIME_STOPPED: 'uuid_realtime_stopped',
+  UUID_BULK_COPIED: 'uuid_bulk_copied',
+  UUID_BULK_DELETED: 'uuid_bulk_deleted',
+  UUID_RESULTS_CLEARED: 'uuid_results_cleared',
+  UUID_STATS_VIEWED: 'uuid_stats_viewed',
   
   // User Interactions
   COPY_RESULT: 'copy_result',
@@ -66,7 +91,9 @@ export const ToolNames = {
   JWT_DECODER: 'jwt_decoder',
   BASE64_ENCODER: 'base64_encoder',
   PASSWORD_GENERATOR: 'password_generator',
-  COLOR_PALETTE: 'color_palette'
+  COLOR_PALETTE: 'color_palette',
+  HASH_GENERATOR: 'hash_generator',
+  UUID_GENERATOR: 'uuid_generator'
 } as const;
 
 /**
@@ -406,13 +433,214 @@ export const trackColorPaletteGenerator = {
 };
 
 /**
+ * Track Hash Generator specific events
+ */
+export const trackHashGenerator = {
+  generate: (algorithm: string, format: string, inputLength: number, processingTime?: number) => {
+    trackEvent(AnalyticsEvents.HASH_GENERATED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      algorithm: algorithm,
+      format: format,
+      input_length: inputLength,
+      processing_time: processingTime,
+      action: 'generate'
+    });
+  },
+
+  fileHash: (algorithm: string, fileSize: number, processingTime?: number) => {
+    trackEvent(AnalyticsEvents.FILE_HASH_GENERATED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      algorithm: algorithm,
+      file_size: fileSize,
+      processing_time: processingTime,
+      action: 'file_hash'
+    });
+  },
+
+  batchHash: (algorithm: string, batchSize: number, totalTime?: number) => {
+    trackEvent(AnalyticsEvents.BATCH_HASH_GENERATED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      algorithm: algorithm,
+      batch_size: batchSize,
+      total_time: totalTime,
+      action: 'batch_hash'
+    });
+  },
+
+  compare: (algorithm: string, match: boolean, similarity?: number) => {
+    trackEvent(AnalyticsEvents.HASH_COMPARED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      algorithm: algorithm,
+      match: match,
+      similarity: similarity,
+      action: 'compare'
+    });
+  },
+
+  export: (format: string, count: number) => {
+    trackEvent(AnalyticsEvents.HASH_BATCH_EXPORTED, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      export_format: format,
+      count: count,
+      action: 'export'
+    });
+  },
+
+  success: (action: 'generate' | 'file_hash' | 'batch_hash' | 'compare' | 'export', algorithm: string) => {
+    trackEvent(AnalyticsEvents.HASH_GENERATION_SUCCESS, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      action: action,
+      algorithm: algorithm,
+      operation_type: action
+    });
+  },
+
+  error: (action: 'generate' | 'file_hash' | 'batch_hash' | 'compare' | 'export', errorType: string, algorithm?: string) => {
+    trackEvent(AnalyticsEvents.HASH_GENERATION_ERROR, {
+      tool_name: ToolNames.HASH_GENERATOR,
+      action: action,
+      error_type: errorType,
+      algorithm: algorithm || 'unknown',
+      operation_type: action
+    });
+  },
+
+  algorithmChange: (oldAlgorithm: string, newAlgorithm: string) => {
+    trackEvent('hash_algorithm_changed', {
+      tool_name: ToolNames.HASH_GENERATOR,
+      old_algorithm: oldAlgorithm,
+      new_algorithm: newAlgorithm,
+      action: 'algorithm_change'
+    });
+  },
+
+  formatChange: (oldFormat: string, newFormat: string) => {
+    trackEvent('hash_format_changed', {
+      tool_name: ToolNames.HASH_GENERATOR,
+      old_format: oldFormat,
+      new_format: newFormat,
+      action: 'format_change'
+    });
+  }
+};
+
+/**
+ * Track UUID Generator specific events
+ */
+export const trackUUIDGenerator = {
+  generate: (version: string, format: string, generationTime: number) => {
+    trackEvent(AnalyticsEvents.UUID_GENERATED, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      version: version,
+      format: format,
+      generation_time: generationTime,
+      action: 'generate'
+    });
+  },
+
+  batchGenerate: (version: string, format: string, count: number, generationTime: number) => {
+    trackEvent(AnalyticsEvents.UUID_BATCH_GENERATED, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      version: version,
+      format: format,
+      count: count,
+      generation_time: generationTime,
+      action: 'batch_generate'
+    });
+  },
+
+  validate: (isValid: boolean, version: string | undefined, format: string) => {
+    trackEvent(AnalyticsEvents.UUID_VALIDATED, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      is_valid: isValid,
+      version: version || 'unknown',
+      format: format,
+      action: 'validate'
+    });
+  },
+
+  versionChange: (version: string, requiresNamespace: boolean) => {
+    trackEvent(AnalyticsEvents.UUID_VERSION_DETECTED, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      version: version,
+      requires_namespace: requiresNamespace,
+      action: 'version_change'
+    });
+  },
+
+  formatChange: (format: string) => {
+    trackEvent(AnalyticsEvents.UUID_FORMAT_CHANGED, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      format: format,
+      action: 'format_change'
+    });
+  },
+
+  export: (format: string, count: number, includeMetadata: boolean) => {
+    trackEvent(AnalyticsEvents.UUID_EXPORTED, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      export_format: format,
+      count: count,
+      include_metadata: includeMetadata,
+      action: 'export'
+    });
+  },
+
+  error: (errorType: string, operation: string) => {
+    trackEvent(AnalyticsEvents.UUID_GENERATION_ERROR, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      error_type: errorType,
+      operation: operation,
+      action: 'error'
+    });
+  },
+
+  realTimeToggle: (action: 'start' | 'stop') => {
+    const eventName = action === 'start' ? AnalyticsEvents.UUID_REALTIME_STARTED : AnalyticsEvents.UUID_REALTIME_STOPPED;
+    trackEvent(eventName, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      action: `realtime_${action}`
+    });
+  },
+
+  bulkAction: (action: 'copy' | 'delete' | 'clear', count: number) => {
+    let eventName: string;
+    switch (action) {
+      case 'copy':
+        eventName = AnalyticsEvents.UUID_BULK_COPIED;
+        break;
+      case 'delete':
+        eventName = AnalyticsEvents.UUID_BULK_DELETED;
+        break;
+      case 'clear':
+        eventName = AnalyticsEvents.UUID_RESULTS_CLEARED;
+        break;
+    }
+
+    trackEvent(eventName, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      count: count,
+      action: `bulk_${action}`
+    });
+  },
+
+  statsView: (totalGenerated: number) => {
+    trackEvent(AnalyticsEvents.UUID_STATS_VIEWED, {
+      tool_name: ToolNames.UUID_GENERATOR,
+      total_generated: totalGenerated,
+      action: 'stats_view'
+    });
+  }
+};
+
+/**
  * Initialize Analytics with user consent
  */
 export const initializeAnalytics = (): void => {
   if (typeof window !== 'undefined') {
     // Track initial page load
     trackPageView(window.location.pathname, document.title);
-    
+
     console.log('📊 Google Analytics 4 initialized for DevToolsKit');
   }
 };
