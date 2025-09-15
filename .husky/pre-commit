@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🧪 Running pre-commit checks..."
+
+# Type check
+echo "🔍 Running TypeScript type check..."
+npm run type-check
+
+# Unit tests with coverage enforcement
+echo "🧪 Running unit tests with coverage check..."
+npm run test:coverage:check
+
+# Check if staged files include test files and enforce test coverage
+echo "📊 Checking test coverage requirements..."
+
+# If staging area includes new tools, ensure they have tests
+staged_files=$(git diff --cached --name-only)
+new_tools=$(echo "$staged_files" | grep -E 'src/tools/.+\.(ts|js)$' | grep -v '.test.' | grep -v '.spec.')
+
+if [ ! -z "$new_tools" ]; then
+  echo "🔍 New tool files detected, checking for corresponding tests..."
+  for tool_file in $new_tools; do
+    # Extract tool name and check for test file
+    tool_dir=$(dirname "$tool_file")
+    tool_base=$(basename "$tool_file" .ts)
+
+    # Look for test files in tests/unit/tools/
+    test_file_pattern="tests/unit/tools/*${tool_base}*.test.ts"
+    if ! ls $test_file_pattern 1> /dev/null 2>&1; then
+      echo "❌ Error: No test file found for $tool_file"
+      echo "💡 Please create tests in tests/unit/tools/ for new tools"
+      echo "💡 Expected pattern: tests/unit/tools/${tool_base}.test.ts"
+      exit 1
+    fi
+  done
+  echo "✅ All new tools have corresponding test files"
+fi
+
+echo "✅ All pre-commit checks passed!"
